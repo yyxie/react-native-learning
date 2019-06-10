@@ -60,7 +60,7 @@ react-native接收原生返回内容:
 }
 
 /**
-* 原生返回
+* 回调方法
 */
 aliyunCallBack: ()=>{
  // 做一些处理
