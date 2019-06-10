@@ -1,4 +1,4 @@
-## 记录react-native项目中遇到的问题
+## 记录react-native项目中踩的坑
 ### 1.react-native-navigation使用
  A: options配置:
 控制状态栏的颜色: 这个要区分ios和安卓(topbar为白色的时候,接下来这样配置)
@@ -57,5 +57,12 @@ react-native接收原生返回内容:
   this.listener = NativeNotificationMoudule.addListener('onFaceResultCallBack', this.aliyunCallBack);
 } else { // android
   this.listener = DeviceEventEmitter.addListener('onFaceResultCallBack', this.aliyunCallBack);
+}
+
+/**
+* 原生返回
+*/
+aliyunCallBack: ()=>{
+ // 做一些处理
 }
 ```
