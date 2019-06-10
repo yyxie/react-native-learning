@@ -16,6 +16,7 @@ bottomTabs: {visible: false}
 ```
 
 但这样有个问题就是在android上底部的菜单仍会占位,所以要设置drawBehind: true
+
 C: 静态配置options
 
 ```js
@@ -41,7 +42,12 @@ export default class Approve extends PureComponent {
 
 ### 2.react-native和原生交互
 
-react-native调用原生: NativeModules.类名.方法名
+react-native调用原生: 
+
+```js
+NativeModules.类名.方法名
+```
+
 react-native接收原生返回内容:
 
 ```js
