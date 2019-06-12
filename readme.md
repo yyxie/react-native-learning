@@ -1,4 +1,17 @@
 ## 记录react-native项目中踩的坑
+### 1.项目搭建
+* 这些步骤都可以通过react-native官网以及react-native-navigation官方文档得到解答
+1. 安装开发工具
+2. 利用命令初始化项目react-native init *项目名*
+3. 运行项目(ios) react-native run-ios, 或者通过xcode进行运行
+4. 接下来就可以快乐的写代码了
+
+* 这里面我们选择使用react-native-navigation,接下来进行react-native-navigation的配置
+1. 安装react-native-navigation
+npm install --save react-native-navigation
+ios 环境的使用
+接下来我们将通过Xcode进行编辑.h和.m文件(https://wix.github.io/react-native-navigation/#/docs/Installing)
+
 ### 1.react-native-navigation使用
  A: options配置:
 控制状态栏的颜色: 这个要区分ios和安卓(topbar为白色的时候,接下来这样配置)
@@ -9,7 +22,7 @@ statusBar: { // 状态栏
 ```
 B: drawbehind
 跳转到下一个页面的时候隐藏底部的菜单
-options里设置 
+options里设置
 
 ```js
 bottomTabs: {visible: false}
@@ -42,7 +55,7 @@ export default class Approve extends PureComponent {
 
 ### 2.react-native和原生交互
 
-react-native调用原生: 
+react-native调用原生:
 
 ```js
 NativeModules.类名.方法名
