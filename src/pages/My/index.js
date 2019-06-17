@@ -4,25 +4,24 @@
  * @time 2019-06-12
  */
 
-import React, {Component} from 'react';
-import {Platform, Text, View} from 'react-native';
-import styles from './index.style'
-
-const instructions = Platform.select({
-    ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-    android:
-        'Double tap R on your keyboard to reload,\n' +
-        'Shake or press menu button for dev menu',
-});
+import React, { Component } from 'react';
+import { Text, View } from 'react-native';
+import styles from './index.style';
 
 export default class My extends Component {
-    render() {
-        return (
-            <View style={styles.container}>
-                <Text style={styles.welcome}>我的</Text>
-            </View>
-        );
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+      text: '111'
+    };
+  }
+
+  render() {
+    const { text } = this.state;
+    return (
+      <View style={styles.container}>
+        <Text style={styles.welcome}>{text}</Text>
+      </View>
+    );
+  }
 }
-
-

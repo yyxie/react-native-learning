@@ -7,17 +7,32 @@
     "test": "jest"
   },
   "dependencies": {
+    "@typescript-eslint/eslint-plugin": "^1.10.2",
+    "@typescript-eslint/parser": "^1.10.2",
+    "eslint-plugin-react-native": "^3.7.0",
     "react": "16.8.3",
     "react-native": "0.59.9",
-    "react-native-navigation": "^2.21.0"
+    "react-native-navigation": "^2.21.0",
+    "typescript": "^3.5.2"
   },
   "devDependencies": {
     "@babel/core": "^7.4.5",
+    "@babel/plugin-proposal-decorators": "^7.4.4",
     "@babel/runtime": "^7.4.5",
+    "@types/react": "^16.8.20",
+    "@types/react-dom": "^16.8.4",
+    "@types/react-native": "^0.57.63",
+    "babel-eslint": "^10.0.1",
     "babel-jest": "^24.8.0",
+    "eslint": "5.3.0",
+    "eslint-config-airbnb": "17.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.1",
+    "eslint-plugin-react": "^7.13.0",
     "jest": "^24.8.0",
     "metro-react-native-babel-preset": "^0.54.1",
-    "react-test-renderer": "16.8.3"
+    "react-test-renderer": "16.8.3",
+    "tslint": "^5.17.0"
   },
   "jest": {
     "preset": "react-native"
