@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import FadeView from './FadeView';
 
-import styles from './indexStyle';
+import styles from './index.style';
 
 
 export default class NoticeContent extends PureComponent {
@@ -25,6 +25,7 @@ export default class NoticeContent extends PureComponent {
 
   componentDidMount() {
     this.doEmitter = DeviceEventEmitter.addListener('showMessage', (type, message, duration, callBack) => {
+      debugger;
       this.setState({
         type,
         title: message,
@@ -49,12 +50,10 @@ export default class NoticeContent extends PureComponent {
       show, title, type, duration
     } = this.state;
     return (
-      show ? <FadeView duration={duration}>
-        <View style={[styles.layout, styles[`${type}Layout`]]}>
-          <Text style={[styles.cont, styles[`${type}Cont`]]}>
-            {title}
-          </Text>
-        </View>
-      </FadeView> : null);
+      <View style={[styles.layout, styles[`${type}Layout`]]}>
+        <Text style={[styles.cont, styles[`${type}Cont`]]}>
+          {title}
+        </Text>
+      </View>);
   }
 }

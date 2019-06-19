@@ -25,7 +25,8 @@ export default StyleSheet.create({
   },
   // 成功(容器)
   successLayout: {
-    backgroundColor: 'rgba(2, 255, 7, 0.3)',
+    backgroundColor: '#02ff07',
+    // 'rgba(2, 255, 7, 0.3)',
   },
   // 成功(内容)
   successContent: {

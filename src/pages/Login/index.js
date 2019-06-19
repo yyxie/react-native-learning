@@ -10,13 +10,14 @@ import {
   Text,
   DeviceEventEmitter,
 } from 'react-native';
-import { Navigation } from 'react-native-navigation';
 
 import Util from '../../utils/util';
 import styles from './index.style';
-import { MOBILE_HISTORY } from '../../utils/constant';
+import { COOKIE, MOBILE_HISTORY } from '../../utils/constant';
 import { Input, DismissKeyboardHOC, Button } from '../../components';
 import Notice from '../../components/Notice';
+import navigationUtil from '../../utils/navigationUtil';
+import { Home } from '../../registerPage/pageName.json';
 
 
 @DismissKeyboardHOC
@@ -56,8 +57,8 @@ export default class Index extends PureComponent {
   };
 
   /**
-     * 获取焦点
-     */
+   * 获取焦点
+   */
   mobileFocus = () => {
     const { mobileHistory } = this.state;
     this.setState({
@@ -66,40 +67,55 @@ export default class Index extends PureComponent {
   };
 
   /**
-     * 获取验证码
-     * @returns {Promise<void>}
-     */
-  handleGetCode = async () => {
-    debugger;
-    /*    const { mobile } = this.state;
-            const mobileHistory = await Util.getStorage(MOBILE_HISTORY) || [];
-            if (this.validatorMobile(mobile)) {
-              const index = mobileHistory.indexOf(mobile);
-              if (mobileHistory.length === 0 || index === -1) { // 不存在
-                if (mobileHistory.length >= 3) {
-                  mobileHistory.splice(2, 1);
-                  mobileHistory.push(mobile);
-                } else {
-                  mobileHistory.push(mobile);
-                }
-              }
-              if (index !== -1) { // 存在的情况将其位置调到最后
-                mobileHistory.splice(index, 1);
-                mobileHistory.push(mobile);
-              }
-              await Util.setStorage(MOBILE_HISTORY, JSON.stringify(mobileHistory));
-              this.getCodeAction(mobile);
-            } */
-    console.log(this.props.data.getData());
-    Notice.success('获取成功');
-    console.log(this.props.getData());
-    Notice.success('获取成功');
+   * 校验手机号
+   * @param rule 规则
+   * @param value 值
+   * @param callback 回调
+   */
+  validatorMobile = (value) => {
+    if (!value) {
+      Notice.fail('手机号不能为空！');
+      return false;
+    }
+    if (Util.vailPhone(value)) {
+      Notice.fail('请输入正确的中国大陆手机号！');
+      return false;
+    }
+    return true;
   };
 
   /**
-     * 手机号change
-     * @param mobile
-     */
+   * 获取验证码
+   * @returns {Promise<void>}
+   */
+  handleGetCode = async () => {
+    const { mobile } = this.state;
+    const mobileHistory = await Util.getStorage(MOBILE_HISTORY) || [];
+    if (this.validatorMobile(mobile)) {
+      const index = mobileHistory.indexOf(mobile);
+      if (mobileHistory.length === 0 || index === -1) { // 不存在
+        if (mobileHistory.length >= 3) {
+          mobileHistory.splice(2, 1);
+          mobileHistory.push(mobile);
+        } else {
+          mobileHistory.push(mobile);
+        }
+      }
+      if (index !== -1) { // 存在的情况将其位置调到最后
+        mobileHistory.splice(index, 1);
+        mobileHistory.push(mobile);
+      }
+      await Util.setStorage(MOBILE_HISTORY, JSON.stringify(mobileHistory));
+      await Util.setStorage(COOKIE, '1111');
+      navigationUtil.setNavigation(Home);
+      Notice.success('登录成功！');
+    }
+  };
+
+  /**
+   * 手机号change
+   * @param mobile
+   */
   mobileChange = (mobile) => {
     let { filterMobileHistory } = this.state;
     const { mobileHistory } = this.state;
