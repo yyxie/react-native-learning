@@ -6,13 +6,11 @@ export default StyleSheet.create({
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingHorizontal: 14,
-    paddingVertical: 7,
+    height: 32
   },
   // 内容
   cont: {
     fontSize: 14,
-    lineHeight: 20,
     textAlign: 'center',
   },
   // 提示(容器)
@@ -20,7 +18,7 @@ export default StyleSheet.create({
     backgroundColor: 'rgba(0, 140, 255, 0.3)',
   },
   // 提示(内容)
-  infoCont: {
+  infoContent: {
     color: '#008CFF',
   },
   // 成功(容器)
@@ -34,7 +32,7 @@ export default StyleSheet.create({
   },
   // 失败(容器)
   failLayout: {
-    backgroundColor: 'rgba(255, 255, 255, 0.3)',
+    backgroundColor: 'rgba(255, 105, 75, 0.3)',
   },
   // 成功(内容)
   failContent: {

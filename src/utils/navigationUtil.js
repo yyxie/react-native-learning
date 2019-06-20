@@ -15,14 +15,14 @@ const config = {
         text: '客房',
         title: TabBarList[0],
         testId: 'FIRST_TAB_BAR_BUTTON',
-        icon: require('../assets/images/icons/icon-tab-room.png'),
+        icon: require('../assets/icons/icon-tab-room.png'),
       },
       {
         name: TabBarList[1],
         text: TabBarList[1],
         title: TabBarList[1],
         testId: 'TabBarList[1]',
-        icon: require('../assets/images/icons/icon-tab-my.png'),
+        icon: require('../assets/icons/icon-tab-my.png'),
       }]
   }
 };

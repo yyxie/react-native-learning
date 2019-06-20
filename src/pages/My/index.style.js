@@ -1,20 +1,35 @@
-import {StyleSheet} from "react-native";
+import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#F5FCFF',
-    },
-    welcome: {
-        fontSize: 20,
-        textAlign: 'center',
-        margin: 10,
-    },
-    instructions: {
-        textAlign: 'center',
-        color: '#333333',
-        marginBottom: 5,
-    },
+  myWrap: {
+    height: '100%',
+    backgroundColor: '#f5f5f5',
+  },
+  /* 顶部用户信息 */
+  headerContent: {
+    width: '100%',
+    height: 111,
+    resizeMode: 'cover',
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  userIcon: {
+    width: 75,
+    height: 75,
+    resizeMode: 'cover',
+    marginLeft: 30
+  },
+  nickName: {
+    marginLeft: 20,
+  },
+  userName: {
+    color: '#fff',
+    lineHeight: 24,
+  },
+  userMobile: {
+    color: '#fff',
+    lineHeight: 24,
+  },
+  /* 顶部用户信息 */
 });

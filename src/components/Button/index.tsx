@@ -1,7 +1,6 @@
 import React from 'react';
 import { Text, TouchableHighlight } from 'react-native';
 
-// @ts-ignore
 import styles from './index.style';
 
 interface Props {
@@ -16,7 +15,6 @@ export default class ButtonCustom extends React.Component<Props, any> {
     type: 'primary',
   };
 
-  // @ts-ignore
   onPress = () => {
     const { onPress, disabled } = this.props;
     if (disabled) {
@@ -29,7 +27,7 @@ export default class ButtonCustom extends React.Component<Props, any> {
     const { children, type, disabled } = this.props;
     return (
       <TouchableHighlight
-        activeOpacity={1}
+        underlayColor={styles[`${type}Wrap`].backgroundColor}
         style={[styles.commonWrap, styles[`${type}Wrap`], disabled ? styles.disabled : {}]}
         onPress={this.onPress}
       >

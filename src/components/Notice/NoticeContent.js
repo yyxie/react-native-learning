@@ -50,10 +50,12 @@ export default class NoticeContent extends PureComponent {
       show, title, type, duration
     } = this.state;
     return (
-      <View style={[styles.layout, styles[`${type}Layout`]]}>
-        <Text style={[styles.cont, styles[`${type}Cont`]]}>
-          {title}
-        </Text>
-      </View>);
+      show && <FadeView duration={duration}>
+        <View style={[styles.layout, styles[`${type}Layout`]]}>
+          <Text style={[styles.cont, styles[`${type}Content`]]}>
+            {title}
+          </Text>
+        </View>
+      </FadeView>);
   }
 }

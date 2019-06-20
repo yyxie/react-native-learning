@@ -21,7 +21,7 @@ import { Home } from '../../registerPage/pageName.json';
 
 
 @DismissKeyboardHOC
-export default class Index extends PureComponent {
+export default class Login extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -43,9 +43,6 @@ export default class Index extends PureComponent {
   }
 
   componentDidMount() {
-    this.deEmitter = DeviceEventEmitter.addListener('showMessage', (a) => {
-      console.log(`接收到通知${a}`);
-    });
   }
 
   getMobileHistory = async () => {
