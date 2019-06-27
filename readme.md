@@ -79,3 +79,20 @@ aliyunCallBack: ()=>{
  // 做一些处理
 }
 ```
+### 使用FlatList中遇到的问题
+
+```js
+  <FlatList
+      style={{ flex: 1 }}
+      data={data}
+      onRefresh={this.onRefresh}
+      refreshing={refreshing}
+      renderItem={this.renderItem}
+      onEndReachedThreshold={0.01}
+      onEndReached={this.onEndReached}
+      ListEmptyComponent={ListEmptyComponent}
+      keyExtractor={(item: any) => item[keyFiled]}
+      ListFooterComponent={ListFooterComponent}
+```
+* 1: 因为我是使用本地数据的,每次上拉的时候多出的数据就一条,程序就不调用onEndReached方法,所以我一直以为是我使用的有问题
+* 2: 下拉加载的时候也会调用到onRndReached方法,
