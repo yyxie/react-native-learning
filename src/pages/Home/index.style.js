@@ -2,9 +2,7 @@ import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    width: '100%',
     backgroundColor: '#F5FCFF',
   },
   welcome: {
@@ -12,9 +10,14 @@ export default StyleSheet.create({
     textAlign: 'center',
     margin: 10,
   },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
+  listItem: {
+    width: '100%',
+    paddingVertical: 20,
     marginBottom: 5,
+    backgroundColor: '#FFAB67',
+    color: '#fff'
   },
+  listText: {
+    color: '#fff'
+  }
 });

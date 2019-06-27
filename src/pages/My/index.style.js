@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 export default StyleSheet.create({
   myWrap: {
     height: '100%',
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#616268',
   },
   /* 顶部用户信息 */
   headerContent: {

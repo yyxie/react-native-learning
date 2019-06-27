@@ -53,7 +53,7 @@ export default class My extends Component {
             key={item.id}
             title={item.title}
             menuIcon={item.menuIcon}
-            onMenuClick={this.onMenuClick.bind(this, item.isTab, item.pageName)}
+            onMenuClick={this.onMenuClick.bind(this, item.isTab, item.pageName, item.isDestory)}
           />);
         })}
       </View>

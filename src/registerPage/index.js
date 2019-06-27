@@ -1,6 +1,7 @@
 import React from 'react';
 import { Navigation } from 'react-native-navigation';
 import { View } from 'react-native';
+import { Provider as AntProvider } from '@ant-design/react-native';
 
 import * as Pages from '../pages';
 import pageNames from './pageName.json';
@@ -13,10 +14,12 @@ function WrapComponent(Component) {
         flex: 1,
       }}
       >
-        <NoticeContent />
-        <Component
-          {...props}
-        />
+        <AntProvider>
+          <NoticeContent />
+          <Component
+            {...props}
+          />
+        </AntProvider>
       </View>
     );
 

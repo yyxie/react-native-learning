@@ -5,29 +5,48 @@
  */
 
 import React, { Component } from 'react';
-import { Platform, Text, View } from 'react-native';
-import styles from './index.style';
+import { Text, View } from 'react-native';
+
+import ScrollList from '../../components/ScrollList';
 import navigationUtil from '../../utils/navigationUtil';
 import pageName from '../../registerPage/pageName.json';
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-  android:
-    'Double tap R on your keyboard to reload,\n'
-    + 'Shake or press menu button for dev menu',
-});
+import Actions from '../../actions/actions';
+import styles from './index.style';
 
 export default class Home extends Component {
-  pressHandler = () => {
-    navigationUtil.pushSingleScreenApp(pageName.Login, true);
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: []
+    };
+  }
+
+  async componentDidMount() {
+    // this.getListData();
+  }
+
+  /**
+   * 渲染列表
+   * @param item
+   */
+  renderItem = (item) => {
+    return (
+      <View style={styles.listItem} key={item.id}>
+        <Text style={styles.listText}>{item.title}</Text>
+      </View>);
   };
 
   render() {
+    const { data } = this.state;
     return (
-      <View style={styles.container}>
-        <Text onPress={this.pressHandler} style={styles.welcome}>Welcome to Native!</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
+      <View style={{ flex: 1 }}>
+        <ScrollList
+          keyFiled="id"
+          style={styles.container}
+          renderItem={this.renderItem}
+          requestAction={Actions.getList}
+        />
       </View>
     );
   }
