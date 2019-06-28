@@ -8,8 +8,6 @@ import React, { Component } from 'react';
 import { Text, View } from 'react-native';
 
 import ScrollList from '../../components/ScrollList';
-import navigationUtil from '../../utils/navigationUtil';
-import pageName from '../../registerPage/pageName.json';
 
 import Actions from '../../actions/actions';
 import styles from './index.style';
@@ -31,6 +29,7 @@ export default class Home extends Component {
    * @param item
    */
   renderItem = (item) => {
+    debugger;
     return (
       <View style={styles.listItem} key={item.id}>
         <Text style={styles.listText}>{item.title}</Text>
@@ -38,13 +37,12 @@ export default class Home extends Component {
   };
 
   render() {
-    const { data } = this.state;
     return (
       <View style={{ flex: 1 }}>
         <ScrollList
           keyFiled="id"
           style={styles.container}
-          renderItem={this.renderItem}
+          renderItems={this.renderItem}
           requestAction={Actions.getList}
         />
       </View>

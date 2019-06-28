@@ -1,26 +1,35 @@
+/**
+ * @fileOverview 滚动列表
+ * @time 2019/06/28
+ */
+
 import React from 'react';
 import {
-  FlatList, Text, View, Dimensions
+  FlatList, View, Dimensions
 } from 'react-native';
 
 
 import EmptyList from '../EmptyList';
+import FooterComponent from './FooterComponent';
 
 interface Props {
   data?: [];
+  noMoreTxt?: string;
   nextPageTitle?: string;
-  renderItem: (item: object) => React.ReactElement;
+  renderItems: (item: object) => React.ReactElement;
   requestAction?: any;
-  getParam?: any;
+  getRequestParam?: any;
   onRefresh?: any;
   onNextPage?: any;
   style: object;
   keyFiled: string;
   isPage?: boolean;
   isPullFresh?: boolean;
+  emptyImg?: any;
+  emptyTitle?: string;
 }
 
-export default class ScrollList extends React.PureComponent<Props, any> {
+export default class ScrollLists extends React.PureComponent<Props, any> {
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -31,25 +40,30 @@ export default class ScrollList extends React.PureComponent<Props, any> {
     };
   }
 
-  reachEnd = false;
-
   time = 0;
 
+  static defaultProps = {
+    isPage: true,
+    isPullFresh: true,
+    keyFiled: 'id'
+  };
+
   async componentDidMount() {
-    console.log('didMount');
-    const { data, requestAction, getParam } = this.props;
+    const { data, requestAction, getRequestParam } = this.props;
     if (data) {
       this.setState({
-        data
+        data,
+        flatListHeight: 0
       });
     } else if (requestAction) {
-      const params = getParam && getParam();
+      const params = getRequestParam && getRequestParam();
       const result = await requestAction(params);
       if (result.errorCode === 0) {
         this.setState({
           data: result.data.list,
           currentPage: 1,
-          totalPage: result.data.totalPage
+          totalPage: result.data.totalPage,
+          flatListHeight: 0
         });
       }
     }
@@ -57,113 +71,131 @@ export default class ScrollList extends React.PureComponent<Props, any> {
   }
 
   componentWillReceiveProps(nextProps: Readonly<Props>, nextContext: any): void {
-    if ('data' in nextProps && nextProps.data !== this.state.data) {
+    if ('data' in nextProps) {
       this.setState({
         data: nextProps.data
       });
     }
   }
 
+  /**
+   * 渲染子项目
+   * @param item
+   */
   renderItem = (item: { item: object }) => {
-    const { renderItem } = this.props;
-    if (renderItem) {
-      return renderItem(item.item);
+    const { renderItems } = this.props;
+    if (renderItems) {
+      return renderItems(item.item);
     }
     return null;
   }
 
+  /**
+   * 下拉刷新
+   */
   onRefresh = async () => {
-    console.log('onRefresh');
     const {
-      data, onRefresh, getParam, requestAction
+      data, onRefresh, getRequestParam, requestAction, isPullFresh
     } = this.props;
+    if (!isPullFresh) {
+      return false;
+    }
     this.setState({
       refreshing: true
     });
-    if (data) {
+    if (data) { // 从外部传递数据的情况
       await onRefresh && onRefresh();
       this.setState({
         refreshing: false
       });
-    } else if (requestAction) {
-      const params = getParam && getParam();
-      const result = await requestAction({ ...params, currentPage: 1 });
+    } else if (requestAction) { // 接口的情况
+      const params = getRequestParam && getRequestParam(); // 获取请求参数
+      const result = await requestAction({ ...params, currentPage: 1 }); // 发送请求
       if (result.errorCode === 0) {
         this.setState({
           data: result.data.list,
           totalPage: result.data.totalPage,
-          currentPage: result.data.currentPage,
+          currentPage: 1,
           refreshing: false
         });
       }
-      this.time = new Date().getTime();
     }
   }
 
-  onNextPage = async (info: { distanceFromEnd: number }) => {
-    console.log('nextpage1');
-    const { totalPage, currentPage, refreshing } = this.state;
+  /**
+   * 上拉加载事件
+   */
+  onNextPage = async () => {
+    const { totalPage, currentPage } = this.state;
     const {
-      data, getParam, requestAction, onNextPage
+      data, getRequestParam, requestAction, onNextPage, isPage
     } = this.props;
-    // if (info.distanceFromEnd <= 0) {
-    if (currentPage >= totalPage) {
+    // 不分页, 或 当前页已经是最后一页, 或 刚请求结束不到500s(为防止上拉导致的多次触发onNextPage事件)
+    if (!isPage || currentPage >= totalPage || new Date().getTime() - this.time < 500) {
       return false;
     }
+
     if (data) {
       onNextPage && onNextPage();
     } else if (requestAction) {
-      const params = getParam && getParam();
+      const params = getRequestParam && getRequestParam();
       const nextPage = currentPage + 1;
       const result = await requestAction({ ...params, currentPage: nextPage });
       if (result.errorCode === 0) {
         const newList = result.data.list.map((item: any, i: any) => {
           const newItem = { ...item };
-          newItem.id = result.data.list.length + i;
+          newItem.id = this.state.data.length + i + 1;
           return newItem;
         });
+        const { data } = this.state;
         this.setState({
-          data: [...result.data.list, ...newList],
+          data: [...data, ...newList],
           totalPage: result.data.totalPage,
           currentPage: nextPage,
         });
         this.time = new Date().getTime();
       }
     }
-    // }
+  }
+
+  /**
+   * 当加载或者布局改变的时候被调用
+   * @param e 事件源
+   */
+  onLayout = (e: any) => {
+    const height = e.nativeEvent.layout.height;
+    if (this.state.flatListHeight < height) {
+      this.setState({ flatListHeight: height });
+    }
   }
 
   render() {
     const {
-      data, refreshing, totalPage, currentPage
+      data, refreshing, totalPage, currentPage, flatListHeight
     } = this.state;
     const {
-      nextPageTitle = '~~~加载更多内容~~~', isPage = true, isPullFresh = true, keyFiled = 'id',
+      isPage, isPullFresh, keyFiled, noMoreTxt, nextPageTitle, emptyImg, emptyTitle, ...others
     } = this.props;
-
     return (
       <View style={{ height: Dimensions.get('window').height - 180 }}>
         <FlatList
           style={{ flex: 1 }}
           data={data}
-          onRefresh={isPullFresh ? this.onRefresh : () => {
-          }}
+          onRefresh={this.onRefresh}
           refreshing={refreshing}
           renderItem={this.renderItem}
           onEndReachedThreshold={0.01}
-          onEndReached={isPage ? this.onNextPage : () => {
-          }}
-          ListEmptyComponent={EmptyList}
+          onEndReached={this.onNextPage}
+          ListEmptyComponent={() => <EmptyList flatListHeight={flatListHeight} emptyImg={emptyImg} emptyTitle={emptyTitle} />}
           keyExtractor={(item: any) => item[keyFiled]}
-          ListFooterComponent={() => {
-            if (currentPage < totalPage) {
-              return <Text style={{ height: 32, fontSize: 12, textAlign: 'center' }}>{nextPageTitle}</Text>;
-            }
-            if (currentPage === totalPage) {
-              return <Text style={{ height: 32, fontSize: 12, textAlign: 'center' }}>没有更多内容</Text>;
-            }
-            return null;
-          }}
+          ListFooterComponent={() => <FooterComponent
+            currentPage={currentPage}
+            totalPage={totalPage}
+            noMoreTxt={noMoreTxt}
+            nextPageTitle={nextPageTitle}
+          />}
+          onLayout={this.onLayout}
+          {...others}
         />
       </View>
     );

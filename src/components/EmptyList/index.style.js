@@ -14,7 +14,8 @@ exports.default = react_native_1.StyleSheet.create({
         resizeMode: 'contain'
     },
     emptyTitle: {
-        color: '#333',
+        padding: 10,
+        color: '#636368',
         fontSize: 14
     }
 });

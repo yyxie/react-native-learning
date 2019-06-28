@@ -1,4 +1,8 @@
 "use strict";
+/**
+ * @fileOverview 滚动列表
+ * @time 2019/06/28
+ */
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -58,6 +62,17 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -65,26 +80,35 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var react_1 = __importDefault(require("react"));
 var react_native_1 = require("react-native");
 var EmptyList_1 = __importDefault(require("../EmptyList"));
-var ScrollList = /** @class */ (function (_super) {
-    __extends(ScrollList, _super);
-    function ScrollList(props) {
+var FooterComponent_1 = __importDefault(require("./FooterComponent"));
+var ScrollLists = /** @class */ (function (_super) {
+    __extends(ScrollLists, _super);
+    function ScrollLists(props) {
         var _this = _super.call(this, props) || this;
-        _this.reachEnd = false;
         _this.time = 0;
+        /**
+         * 渲染子项目
+         * @param item
+         */
         _this.renderItem = function (item) {
-            var renderItem = _this.props.renderItem;
-            if (renderItem) {
-                return renderItem(item.item);
+            var renderItems = _this.props.renderItems;
+            if (renderItems) {
+                return renderItems(item.item);
             }
             return null;
         };
+        /**
+         * 下拉刷新
+         */
         _this.onRefresh = function () { return __awaiter(_this, void 0, void 0, function () {
-            var _a, data, onRefresh, getParam, requestAction, params, result;
+            var _a, data, onRefresh, getRequestParam, requestAction, isPullFresh, params, result;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
-                        console.log('onRefresh');
-                        _a = this.props, data = _a.data, onRefresh = _a.onRefresh, getParam = _a.getParam, requestAction = _a.requestAction;
+                        _a = this.props, data = _a.data, onRefresh = _a.onRefresh, getRequestParam = _a.getRequestParam, requestAction = _a.requestAction, isPullFresh = _a.isPullFresh;
+                        if (!isPullFresh) {
+                            return [2 /*return*/, false];
+                        }
                         this.setState({
                             refreshing: true
                         });
@@ -98,7 +122,7 @@ var ScrollList = /** @class */ (function (_super) {
                         return [3 /*break*/, 4];
                     case 2:
                         if (!requestAction) return [3 /*break*/, 4];
-                        params = getParam && getParam();
+                        params = getRequestParam && getRequestParam();
                         return [4 /*yield*/, requestAction(__assign({}, params, { currentPage: 1 }))];
                     case 3:
                         result = _b.sent();
@@ -106,26 +130,28 @@ var ScrollList = /** @class */ (function (_super) {
                             this.setState({
                                 data: result.data.list,
                                 totalPage: result.data.totalPage,
-                                currentPage: result.data.currentPage,
+                                currentPage: 1,
                                 refreshing: false
                             });
                         }
-                        this.time = new Date().getTime();
                         _b.label = 4;
                     case 4: return [2 /*return*/];
                 }
             });
         }); };
-        _this.onNextPage = function (info) { return __awaiter(_this, void 0, void 0, function () {
-            var _a, totalPage, currentPage, refreshing, _b, data, getParam, requestAction, onNextPage, params, nextPage, result_1, newList;
+        /**
+         * 上拉加载事件
+         */
+        _this.onNextPage = function () { return __awaiter(_this, void 0, void 0, function () {
+            var _a, totalPage, currentPage, _b, data, getRequestParam, requestAction, onNextPage, isPage, params, nextPage, result, newList, data_1;
+            var _this = this;
             return __generator(this, function (_c) {
                 switch (_c.label) {
                     case 0:
-                        console.log('nextpage1');
-                        _a = this.state, totalPage = _a.totalPage, currentPage = _a.currentPage, refreshing = _a.refreshing;
-                        _b = this.props, data = _b.data, getParam = _b.getParam, requestAction = _b.requestAction, onNextPage = _b.onNextPage;
-                        // if (info.distanceFromEnd <= 0) {
-                        if (currentPage >= totalPage) {
+                        _a = this.state, totalPage = _a.totalPage, currentPage = _a.currentPage;
+                        _b = this.props, data = _b.data, getRequestParam = _b.getRequestParam, requestAction = _b.requestAction, onNextPage = _b.onNextPage, isPage = _b.isPage;
+                        // 不分页, 或 当前页已经是最后一页, 或 刚请求结束不到500s(为防止上拉导致的多次触发onNextPage事件)
+                        if (!isPage || currentPage >= totalPage || new Date().getTime() - this.time < 500) {
                             return [2 /*return*/, false];
                         }
                         if (!data) return [3 /*break*/, 1];
@@ -133,20 +159,21 @@ var ScrollList = /** @class */ (function (_super) {
                         return [3 /*break*/, 3];
                     case 1:
                         if (!requestAction) return [3 /*break*/, 3];
-                        params = getParam && getParam();
+                        params = getRequestParam && getRequestParam();
                         nextPage = currentPage + 1;
                         return [4 /*yield*/, requestAction(__assign({}, params, { currentPage: nextPage }))];
                     case 2:
-                        result_1 = _c.sent();
-                        if (result_1.errorCode === 0) {
-                            newList = result_1.data.list.map(function (item, i) {
+                        result = _c.sent();
+                        if (result.errorCode === 0) {
+                            newList = result.data.list.map(function (item, i) {
                                 var newItem = __assign({}, item);
-                                newItem.id = result_1.data.list.length + i;
+                                newItem.id = _this.state.data.length + i + 1;
                                 return newItem;
                             });
+                            data_1 = this.state.data;
                             this.setState({
-                                data: result_1.data.list.concat(newList),
-                                totalPage: result_1.data.totalPage,
+                                data: data_1.concat(newList),
+                                totalPage: result.data.totalPage,
                                 currentPage: nextPage,
                             });
                             this.time = new Date().getTime();
@@ -156,6 +183,16 @@ var ScrollList = /** @class */ (function (_super) {
                 }
             });
         }); };
+        /**
+         * 当加载或者布局改变的时候被调用
+         * @param e 事件源
+         */
+        _this.onLayout = function (e) {
+            var height = e.nativeEvent.layout.height;
+            if (_this.state.flatListHeight < height) {
+                _this.setState({ flatListHeight: height });
+            }
+        };
         _this.state = {
             data: [],
             refreshing: false,
@@ -164,22 +201,22 @@ var ScrollList = /** @class */ (function (_super) {
         };
         return _this;
     }
-    ScrollList.prototype.componentDidMount = function () {
+    ScrollLists.prototype.componentDidMount = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, data, requestAction, getParam, params, result;
+            var _a, data, requestAction, getRequestParam, params, result;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
-                        console.log('didMount');
-                        _a = this.props, data = _a.data, requestAction = _a.requestAction, getParam = _a.getParam;
+                        _a = this.props, data = _a.data, requestAction = _a.requestAction, getRequestParam = _a.getRequestParam;
                         if (!data) return [3 /*break*/, 1];
                         this.setState({
-                            data: data
+                            data: data,
+                            flatListHeight: 0
                         });
                         return [3 /*break*/, 3];
                     case 1:
                         if (!requestAction) return [3 /*break*/, 3];
-                        params = getParam && getParam();
+                        params = getRequestParam && getRequestParam();
                         return [4 /*yield*/, requestAction(params)];
                     case 2:
                         result = _b.sent();
@@ -187,7 +224,8 @@ var ScrollList = /** @class */ (function (_super) {
                             this.setState({
                                 data: result.data.list,
                                 currentPage: 1,
-                                totalPage: result.data.totalPage
+                                totalPage: result.data.totalPage,
+                                flatListHeight: 0
                             });
                         }
                         _b.label = 3;
@@ -198,29 +236,24 @@ var ScrollList = /** @class */ (function (_super) {
             });
         });
     };
-    ScrollList.prototype.componentWillReceiveProps = function (nextProps, nextContext) {
-        if ('data' in nextProps && nextProps.data !== this.state.data) {
+    ScrollLists.prototype.componentWillReceiveProps = function (nextProps, nextContext) {
+        if ('data' in nextProps) {
             this.setState({
                 data: nextProps.data
             });
         }
     };
-    ScrollList.prototype.render = function () {
-        var _a = this.state, data = _a.data, refreshing = _a.refreshing, totalPage = _a.totalPage, currentPage = _a.currentPage;
-        var _b = this.props, _c = _b.nextPageTitle, nextPageTitle = _c === void 0 ? '~~~加载更多内容~~~' : _c, _d = _b.isPage, isPage = _d === void 0 ? true : _d, _e = _b.isPullFresh, isPullFresh = _e === void 0 ? true : _e, _f = _b.keyFiled, keyFiled = _f === void 0 ? 'id' : _f;
+    ScrollLists.prototype.render = function () {
+        var _a = this.state, data = _a.data, refreshing = _a.refreshing, totalPage = _a.totalPage, currentPage = _a.currentPage, flatListHeight = _a.flatListHeight;
+        var _b = this.props, isPage = _b.isPage, isPullFresh = _b.isPullFresh, keyFiled = _b.keyFiled, noMoreTxt = _b.noMoreTxt, nextPageTitle = _b.nextPageTitle, emptyImg = _b.emptyImg, emptyTitle = _b.emptyTitle, others = __rest(_b, ["isPage", "isPullFresh", "keyFiled", "noMoreTxt", "nextPageTitle", "emptyImg", "emptyTitle"]);
         return (react_1.default.createElement(react_native_1.View, { style: { height: react_native_1.Dimensions.get('window').height - 180 } },
-            react_1.default.createElement(react_native_1.FlatList, { style: { flex: 1 }, data: data, onRefresh: isPullFresh ? this.onRefresh : function () {
-                }, refreshing: refreshing, renderItem: this.renderItem, onEndReachedThreshold: 0.01, onEndReached: isPage ? this.onNextPage : function () {
-                }, ListEmptyComponent: EmptyList_1.default, keyExtractor: function (item) { return item[keyFiled]; }, ListFooterComponent: function () {
-                    if (currentPage < totalPage) {
-                        return react_1.default.createElement(react_native_1.Text, { style: { height: 32, fontSize: 12, textAlign: 'center' } }, nextPageTitle);
-                    }
-                    if (currentPage === totalPage) {
-                        return react_1.default.createElement(react_native_1.Text, { style: { height: 32, fontSize: 12, textAlign: 'center' } }, "\u6CA1\u6709\u66F4\u591A\u5185\u5BB9");
-                    }
-                    return null;
-                } })));
+            react_1.default.createElement(react_native_1.FlatList, __assign({ style: { flex: 1 }, data: data, onRefresh: this.onRefresh, refreshing: refreshing, renderItem: this.renderItem, onEndReachedThreshold: 0.01, onEndReached: this.onNextPage, ListEmptyComponent: function () { return react_1.default.createElement(EmptyList_1.default, { flatListHeight: flatListHeight, emptyImg: emptyImg, emptyTitle: emptyTitle }); }, keyExtractor: function (item) { return item[keyFiled]; }, ListFooterComponent: function () { return react_1.default.createElement(FooterComponent_1.default, { currentPage: currentPage, totalPage: totalPage, noMoreTxt: noMoreTxt, nextPageTitle: nextPageTitle }); }, onLayout: this.onLayout }, others))));
     };
-    return ScrollList;
+    ScrollLists.defaultProps = {
+        isPage: true,
+        isPullFresh: true,
+        keyFiled: 'id'
+    };
+    return ScrollLists;
 }(react_1.default.PureComponent));
-exports.default = ScrollList;
+exports.default = ScrollLists;
