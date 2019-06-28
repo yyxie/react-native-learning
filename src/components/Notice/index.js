@@ -1,7 +1,9 @@
 /**
- * @fileoverview 顶部提示
+ * @fileOverview 顶部提示
  * @author 解园园
+ * @time 2019-06-28
  */
+
 import { DeviceEventEmitter } from 'react-native';
 
 export default {

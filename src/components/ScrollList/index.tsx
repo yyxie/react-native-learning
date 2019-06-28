@@ -1,6 +1,6 @@
 /**
  * @fileOverview 滚动列表
- * @time 2019/06/28
+ * @time 2019-06-28
  */
 
 import React from 'react';
@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 
 
-import EmptyList from '../EmptyList';
+import EmptyList from './EmptyList';
 import FooterComponent from './FooterComponent';
 
 interface Props {

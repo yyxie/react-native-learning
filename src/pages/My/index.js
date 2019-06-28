@@ -5,10 +5,12 @@
  */
 
 import React, { Component } from 'react';
-import { Text, View, ImageBackground,Image } from 'react-native';
+import {
+  Text, View, ImageBackground, Image
+} from 'react-native';
 
 import navigationUtil from '../../utils/navigationUtil';
-import MenuItem from '../../components/Menu';
+import { Menu as MenuItem } from '../../components';
 import MenuData from './menu';
 
 

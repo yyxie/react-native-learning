@@ -1,7 +1,7 @@
 "use strict";
 /**
  * @fileOverview 滚动列表
- * @time 2019/06/28
+ * @time 2019-06-28
  */
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
@@ -79,7 +79,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var react_1 = __importDefault(require("react"));
 var react_native_1 = require("react-native");
-var EmptyList_1 = __importDefault(require("../EmptyList"));
+var EmptyList_1 = __importDefault(require("./EmptyList"));
 var FooterComponent_1 = __importDefault(require("./FooterComponent"));
 var ScrollLists = /** @class */ (function (_super) {
     __extends(ScrollLists, _super);

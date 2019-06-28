@@ -7,7 +7,7 @@
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
 
-import ScrollList from '../../components/ScrollList';
+import { ScrollList } from '../../components';
 
 import Actions from '../../actions/actions';
 import styles from './index.style';
@@ -16,7 +16,6 @@ export default class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: []
     };
   }
 
@@ -29,7 +28,6 @@ export default class Home extends Component {
    * @param item
    */
   renderItem = (item) => {
-    debugger;
     return (
       <View style={styles.listItem} key={item.id}>
         <Text style={styles.listText}>{item.title}</Text>

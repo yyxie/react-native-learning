@@ -8,7 +8,6 @@ import React, { PureComponent } from 'react';
 import {
   View,
   Text,
-  DeviceEventEmitter,
 } from 'react-native';
 
 import Util from '../../utils/util';

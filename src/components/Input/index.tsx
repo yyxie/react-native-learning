@@ -3,7 +3,7 @@
  * @author 解园园
  * @time 2019-05
  */
-import React, {PureComponent} from 'react';
+import React, { PureComponent } from 'react';
 import {
   FlatList,
   View,
@@ -19,31 +19,31 @@ import styles from './style';
 
 interface Props {
   // 默认值
-  defaultValue?: string,
+  defaultValue?: string;
   // 输入框文案
-  value?: string,
+  value?: string;
   // placeholder
-  placeholder?: string,
+  placeholder?: string;
   // 清空按钮的icon
   clearIcon?: any;
   // 是否包含清空按钮
-  isShowClear?: boolean,
+  isShowClear?: boolean;
   // 历史记录
-  readonly historyList?: Array<string> | any,
+  readonly historyList?: string[] | any;
   // input样式
-  inputStyle?: object,
+  inputStyle?: object;
   // input包裹样式
-  inputWrapStyle?: object,
+  inputWrapStyle?: object;
   // 整体包裹的样式
-  wrapAllStyle?: object,
+  wrapAllStyle?: object;
 
   // 其他
-  [propsName: string]: any,
+  [propsName: string]: any;
 }
 
 interface State {
   // 文本框内容
-  value: any,
+  value: any;
 }
 
 export default class Input extends PureComponent<Props, State> {
@@ -51,13 +51,13 @@ export default class Input extends PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     let value = '';
-    if (props.value === undefined) { //只有当value没有传的情况下才会从defaultValue中取值
-      value = props.defaultValue === undefined ? '' : props.defaultValue
+    if (props.value === undefined) { // 只有当value没有传的情况下才会从defaultValue中取值
+      value = props.defaultValue === undefined ? '' : props.defaultValue;
     } else {
-      value = props.value
+      value = props.value;
     }
     this.state = {
-      value: value
+      value
     };
   }
 
@@ -120,8 +120,8 @@ export default class Input extends PureComponent<Props, State> {
    * @returns {*}
    */
   renderHistory = (itemObj: any) => {
-    const {item} = itemObj;
-    const {renderHistory} = this.props;
+    const { item } = itemObj;
+    const { renderHistory } = this.props;
     if (renderHistory) {
       return renderHistory(itemObj);
     }
@@ -134,7 +134,7 @@ export default class Input extends PureComponent<Props, State> {
   };
 
   render() {
-    const {value} = this.state;
+    const { value } = this.state;
     const {
       isShowClear, defaultValue, placeholder, historyList, inputStyle, inputWrapStyle, wrapAllStyle, clearIcon, ...others
     } = this.props;

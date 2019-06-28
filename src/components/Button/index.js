@@ -18,6 +18,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var react_1 = __importDefault(require("react"));
 var react_native_1 = require("react-native");
+/**
+ * @fileOverview 按钮
+ * @author 解园园
+ * @time 2019-05
+ */
 var index_style_1 = __importDefault(require("./index.style"));
 var ButtonCustom = /** @class */ (function (_super) {
     __extends(ButtonCustom, _super);

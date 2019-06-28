@@ -104,7 +104,7 @@ var Input = /** @class */ (function (_super) {
                 react_1.default.createElement(react_native_1.Text, { style: style_1.default.autoCompleteListItemStyle }, item)));
         };
         var value = '';
-        if (props.value === undefined) { //只有当value没有传的情况下才会从defaultValue中取值
+        if (props.value === undefined) { // 只有当value没有传的情况下才会从defaultValue中取值
             value = props.defaultValue === undefined ? '' : props.defaultValue;
         }
         else {

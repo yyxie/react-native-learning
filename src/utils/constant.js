@@ -2,4 +2,4 @@
 export const COOKIE = 'cookie';
 
 // 手机号history
-export const MOBILE_HISTORY='mobile-history';
+export const MOBILE_HISTORY = 'mobile-history';

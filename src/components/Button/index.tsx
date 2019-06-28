@@ -1,5 +1,10 @@
 import React from 'react';
 import { Text, TouchableHighlight } from 'react-native';
+/**
+ * @fileOverview 按钮
+ * @author 解园园
+ * @time 2019-05
+ */
 
 import styles from './index.style';
 

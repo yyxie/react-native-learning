@@ -1,3 +1,9 @@
+/**
+ * @fileOverview 菜单
+ * @author 解园园
+ * @time 2019-06-28
+ */
+
 import React from 'react';
 import {
   View, Image, Text
