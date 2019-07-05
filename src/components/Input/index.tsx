@@ -37,6 +37,8 @@ interface Props {
   // 整体包裹的样式
   wrapAllStyle?: object;
 
+  // 输入框前的icon
+  frontIcon?: React.ReactNode;
   // 其他
   [propsName: string]: any;
 }
@@ -136,14 +138,16 @@ export default class Input extends PureComponent<Props, State> {
   render() {
     const { value } = this.state;
     const {
-      isShowClear, defaultValue, placeholder, historyList, inputStyle, inputWrapStyle, wrapAllStyle, clearIcon, ...others
+      isShowClear, defaultValue, placeholder, historyList, inputStyle, inputWrapStyle, wrapAllStyle, clearIcon, frontIcon, ...others
     } = this.props;
     return (
       <View style={[{
+        width: '100%',
         position: 'relative'
       }, wrapAllStyle]}
       >
         <View style={[styles.textInputWrapper, inputWrapStyle]}>
+          {frontIcon }
           <TextInput
             style={[styles.textInputStyle, inputStyle]}
             onChangeText={this.onChange}

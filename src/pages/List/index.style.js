@@ -19,17 +19,5 @@ export default StyleSheet.create({
   },
   listText: {
     color: '#fff'
-  },
-  frontIcon: {
-    width: 14,
-    height: 14,
-    resizeMode: 'contain',
-  },
-  searchBar: {
-    height: 28,
-    borderBottomWidth: 1,
-    borderColor: '#eee',
-    borderStyle: 'solid',
-    marginBottom: 5,
   }
 });

@@ -127,11 +127,13 @@ var Input = /** @class */ (function (_super) {
     };
     Input.prototype.render = function () {
         var value = this.state.value;
-        var _a = this.props, isShowClear = _a.isShowClear, defaultValue = _a.defaultValue, placeholder = _a.placeholder, historyList = _a.historyList, inputStyle = _a.inputStyle, inputWrapStyle = _a.inputWrapStyle, wrapAllStyle = _a.wrapAllStyle, clearIcon = _a.clearIcon, others = __rest(_a, ["isShowClear", "defaultValue", "placeholder", "historyList", "inputStyle", "inputWrapStyle", "wrapAllStyle", "clearIcon"]);
+        var _a = this.props, isShowClear = _a.isShowClear, defaultValue = _a.defaultValue, placeholder = _a.placeholder, historyList = _a.historyList, inputStyle = _a.inputStyle, inputWrapStyle = _a.inputWrapStyle, wrapAllStyle = _a.wrapAllStyle, clearIcon = _a.clearIcon, frontIcon = _a.frontIcon, others = __rest(_a, ["isShowClear", "defaultValue", "placeholder", "historyList", "inputStyle", "inputWrapStyle", "wrapAllStyle", "clearIcon", "frontIcon"]);
         return (react_1.default.createElement(react_native_1.View, { style: [{
+                    width: '100%',
                     position: 'relative'
                 }, wrapAllStyle] },
             react_1.default.createElement(react_native_1.View, { style: [style_1.default.textInputWrapper, inputWrapStyle] },
+                frontIcon,
                 react_1.default.createElement(react_native_1.TextInput, __assign({ style: [style_1.default.textInputStyle, inputStyle], onChangeText: this.onChange, value: value, defaultValue: defaultValue, editable: true, placeholder: placeholder, returnKeyType: 'done', underlineColorAndroid: 'transparent', onSubmitEditing: react_native_1.Keyboard.dismiss }, others)),
                 isShowClear && value !== '' && (react_1.default.createElement(react_native_1.TouchableHighlight, { onPress: this.clear, underlayColor: "transparent" },
                     react_1.default.createElement(react_native_1.Image, { style: style_1.default.menuArrow, source: clearIcon })))),

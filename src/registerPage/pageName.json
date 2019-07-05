@@ -1,5 +1,7 @@
 {
     "Home": "home",
     "My": "my",
-    "Login": "login"
+    "Login": "login",
+    "List": "list",
+    "Form": "form"
 }

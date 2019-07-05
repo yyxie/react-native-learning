@@ -10,7 +10,9 @@ export default StyleSheet.create({
     paddingLeft: 5
   },
   textInputStyle: {
+    flex: 1,
     padding: 0,
+    paddingLeft: 5,
     fontSize: 14
   },
   flex: {

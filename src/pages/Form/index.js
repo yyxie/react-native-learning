@@ -1,32 +1,23 @@
 /**
- * @fileOverview 首页
+ * @fileOverview form
  * @author 解园园
- * @time 2019-06-12
+ * @time 2019-07-05
  */
 
 import React, { Component } from 'react';
 import {
-  Text, View, Image, TouchableHighlight
+  Text, View, Image
 } from 'react-native';
 
-import { ScrollList, Input, FormLayout } from '../../components';
+import {Input, FormLayout } from '../../components';
 
-import Actions from '../../actions/actions';
+
 import styles from './index.style';
 
-export default class Home extends Component {
+export default class Form extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      data: [{
-        id: 1,
-        title: '111'
-      },
-      {
-        id: 2,
-        title: '222'
-      }]
-    };
+    this.state = {};
   }
 
   async componentDidMount() {
@@ -53,12 +44,20 @@ export default class Home extends Component {
             placeholder="输入名称进行查询"
           />
         </View>
-        <ScrollList
-          keyFiled="id"
-          style={styles.container}
-          renderItems={this.renderItem}
-          data={this.state.data}
-        />
+        <FormLayout label="搜索项">
+          <Input
+            frontIcon={<Image style={styles.frontIcon} source={require('../../assets/icons/icon-search.png')} />}
+            placeholder="输入名称进行查询"
+          />
+        </FormLayout>
+        <View style={{ paddingHorizontal: 20 }}>
+          <FormLayout label="搜索项" mode="vertical">
+            <Input
+              frontIcon={<Image style={styles.frontIcon} source={require('../../assets/icons/icon-search.png')} />}
+              placeholder="输入名称进行查询"
+            />
+          </FormLayout>
+        </View>
       </View>
     );
   }

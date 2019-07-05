@@ -1,7 +1,7 @@
 "use strict";
 /**
  * @fileOverview 滚动列表
- * @time 2019-06-28
+ * @time 2019-06-29
  */
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
@@ -143,13 +143,13 @@ var ScrollLists = /** @class */ (function (_super) {
          * 上拉加载事件
          */
         _this.onNextPage = function () { return __awaiter(_this, void 0, void 0, function () {
-            var _a, totalPage, currentPage, _b, data, getRequestParam, requestAction, onNextPage, isPage, params, nextPage, result, newList, data_1;
+            var _a, totalPage, currentPage, isPage, _b, data, getRequestParam, requestAction, onNextPage, params, nextPage, result, newList, data_1;
             var _this = this;
             return __generator(this, function (_c) {
                 switch (_c.label) {
                     case 0:
-                        _a = this.state, totalPage = _a.totalPage, currentPage = _a.currentPage;
-                        _b = this.props, data = _b.data, getRequestParam = _b.getRequestParam, requestAction = _b.requestAction, onNextPage = _b.onNextPage, isPage = _b.isPage;
+                        _a = this.state, totalPage = _a.totalPage, currentPage = _a.currentPage, isPage = _a.isPage;
+                        _b = this.props, data = _b.data, getRequestParam = _b.getRequestParam, requestAction = _b.requestAction, onNextPage = _b.onNextPage;
                         // 不分页, 或 当前页已经是最后一页, 或 刚请求结束不到500s(为防止上拉导致的多次触发onNextPage事件)
                         if (!isPage || currentPage >= totalPage || new Date().getTime() - this.time < 500) {
                             return [2 /*return*/, false];
@@ -197,21 +197,23 @@ var ScrollLists = /** @class */ (function (_super) {
             data: [],
             refreshing: false,
             totalPage: 0,
-            currentPage: 0
+            currentPage: 0,
+            isPage: false
         };
         return _this;
     }
     ScrollLists.prototype.componentDidMount = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, data, requestAction, getRequestParam, params, result;
+            var _a, data, requestAction, getRequestParam, isPage, params, result;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
-                        _a = this.props, data = _a.data, requestAction = _a.requestAction, getRequestParam = _a.getRequestParam;
+                        _a = this.props, data = _a.data, requestAction = _a.requestAction, getRequestParam = _a.getRequestParam, isPage = _a.isPage;
                         if (!data) return [3 /*break*/, 1];
                         this.setState({
                             data: data,
-                            flatListHeight: 0
+                            flatListHeight: 0,
+                            isPage: isPage || false
                         });
                         return [3 /*break*/, 3];
                     case 1:
@@ -225,7 +227,8 @@ var ScrollLists = /** @class */ (function (_super) {
                                 data: result.data.list,
                                 currentPage: 1,
                                 totalPage: result.data.totalPage,
-                                flatListHeight: 0
+                                flatListHeight: 0,
+                                isPage: isPage || true
                             });
                         }
                         _b.label = 3;
@@ -244,13 +247,13 @@ var ScrollLists = /** @class */ (function (_super) {
         }
     };
     ScrollLists.prototype.render = function () {
-        var _a = this.state, data = _a.data, refreshing = _a.refreshing, totalPage = _a.totalPage, currentPage = _a.currentPage, flatListHeight = _a.flatListHeight;
-        var _b = this.props, isPage = _b.isPage, isPullFresh = _b.isPullFresh, keyFiled = _b.keyFiled, noMoreTxt = _b.noMoreTxt, nextPageTitle = _b.nextPageTitle, emptyImg = _b.emptyImg, emptyTitle = _b.emptyTitle, others = __rest(_b, ["isPage", "isPullFresh", "keyFiled", "noMoreTxt", "nextPageTitle", "emptyImg", "emptyTitle"]);
+        var _a = this.state, data = _a.data, refreshing = _a.refreshing, totalPage = _a.totalPage, currentPage = _a.currentPage, flatListHeight = _a.flatListHeight, isPage = _a.isPage;
+        var _b = this.props, isPullFresh = _b.isPullFresh, keyFiled = _b.keyFiled, noMoreTxt = _b.noMoreTxt, nextPageTitle = _b.nextPageTitle, emptyImg = _b.emptyImg, emptyTitle = _b.emptyTitle, others = __rest(_b, ["isPullFresh", "keyFiled", "noMoreTxt", "nextPageTitle", "emptyImg", "emptyTitle"]);
+        debugger;
         return (react_1.default.createElement(react_native_1.View, { style: { height: react_native_1.Dimensions.get('window').height - 180 } },
-            react_1.default.createElement(react_native_1.FlatList, __assign({ style: { flex: 1 }, data: data, onRefresh: this.onRefresh, refreshing: refreshing, renderItem: this.renderItem, onEndReachedThreshold: 0.01, onEndReached: this.onNextPage, ListEmptyComponent: function () { return react_1.default.createElement(EmptyList_1.default, { flatListHeight: flatListHeight, emptyImg: emptyImg, emptyTitle: emptyTitle }); }, keyExtractor: function (item) { return item[keyFiled]; }, ListFooterComponent: function () { return react_1.default.createElement(FooterComponent_1.default, { currentPage: currentPage, totalPage: totalPage, noMoreTxt: noMoreTxt, nextPageTitle: nextPageTitle }); }, onLayout: this.onLayout }, others))));
+            react_1.default.createElement(react_native_1.FlatList, __assign({ style: { flex: 1 }, data: data, onRefresh: this.onRefresh, refreshing: refreshing, renderItem: this.renderItem, onEndReachedThreshold: 0.01, onEndReached: this.onNextPage, ListEmptyComponent: function () { return react_1.default.createElement(EmptyList_1.default, { flatListHeight: flatListHeight, emptyImg: emptyImg, emptyTitle: emptyTitle }); }, keyExtractor: function (item) { return item[keyFiled]; }, ListFooterComponent: function () { return react_1.default.createElement(FooterComponent_1.default, { isPage: isPage, currentPage: currentPage, totalPage: totalPage, noMoreTxt: noMoreTxt, nextPageTitle: nextPageTitle }); }, onLayout: this.onLayout }, others))));
     };
     ScrollLists.defaultProps = {
-        isPage: true,
         isPullFresh: true,
         keyFiled: 'id'
     };

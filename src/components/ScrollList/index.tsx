@@ -1,6 +1,6 @@
 /**
  * @fileOverview 滚动列表
- * @time 2019-06-28
+ * @time 2019-06-29
  */
 
 import React from 'react';
@@ -36,24 +36,27 @@ export default class ScrollLists extends React.PureComponent<Props, any> {
       data: [],
       refreshing: false,
       totalPage: 0,
-      currentPage: 0
+      currentPage: 0,
+      isPage: false
     };
   }
 
   time = 0;
 
   static defaultProps = {
-    isPage: true,
     isPullFresh: true,
     keyFiled: 'id'
   };
 
   async componentDidMount() {
-    const { data, requestAction, getRequestParam } = this.props;
+    const {
+      data, requestAction, getRequestParam, isPage
+    } = this.props;
     if (data) {
       this.setState({
         data,
-        flatListHeight: 0
+        flatListHeight: 0,
+        isPage: isPage || false
       });
     } else if (requestAction) {
       const params = getRequestParam && getRequestParam();
@@ -63,7 +66,8 @@ export default class ScrollLists extends React.PureComponent<Props, any> {
           data: result.data.list,
           currentPage: 1,
           totalPage: result.data.totalPage,
-          flatListHeight: 0
+          flatListHeight: 0,
+          isPage: isPage || true
         });
       }
     }
@@ -126,9 +130,9 @@ export default class ScrollLists extends React.PureComponent<Props, any> {
    * 上拉加载事件
    */
   onNextPage = async () => {
-    const { totalPage, currentPage } = this.state;
+    const { totalPage, currentPage, isPage } = this.state;
     const {
-      data, getRequestParam, requestAction, onNextPage, isPage
+      data, getRequestParam, requestAction, onNextPage
     } = this.props;
     // 不分页, 或 当前页已经是最后一页, 或 刚请求结束不到500s(为防止上拉导致的多次触发onNextPage事件)
     if (!isPage || currentPage >= totalPage || new Date().getTime() - this.time < 500) {
@@ -171,11 +175,12 @@ export default class ScrollLists extends React.PureComponent<Props, any> {
 
   render() {
     const {
-      data, refreshing, totalPage, currentPage, flatListHeight
+      data, refreshing, totalPage, currentPage, flatListHeight, isPage
     } = this.state;
     const {
-      isPage, isPullFresh, keyFiled, noMoreTxt, nextPageTitle, emptyImg, emptyTitle, ...others
+      isPullFresh, keyFiled, noMoreTxt, nextPageTitle, emptyImg, emptyTitle, ...others
     } = this.props;
+    debugger;
     return (
       <View style={{ height: Dimensions.get('window').height - 180 }}>
         <FlatList
@@ -189,6 +194,7 @@ export default class ScrollLists extends React.PureComponent<Props, any> {
           ListEmptyComponent={() => <EmptyList flatListHeight={flatListHeight} emptyImg={emptyImg} emptyTitle={emptyTitle} />}
           keyExtractor={(item: any) => item[keyFiled]}
           ListFooterComponent={() => <FooterComponent
+            isPage={isPage}
             currentPage={currentPage}
             totalPage={totalPage}
             noMoreTxt={noMoreTxt}

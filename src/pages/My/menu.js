@@ -14,5 +14,19 @@ export default [
     pageName: PageNames.My,
     menuIcon: require('../../assets/icons/icon-menu-operator.png'),
     isTab: true,
+  },
+  {
+    id: 3,
+    title: '滚动列表',
+    pageName: PageNames.List,
+    menuIcon: require('../../assets/icons/icon-menu-operator.png'),
+    isTab: false,
+  },
+  {
+    id: 4,
+    title: '表单',
+    pageName: PageNames.Form,
+    menuIcon: require('../../assets/icons/icon-menu-operator.png'),
+    isTab: false,
   }
 ];

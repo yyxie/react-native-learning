@@ -31,4 +31,6 @@ export default function () {
   Navigation.registerComponent(pageNames.Home, () => WrapComponent(Pages.Home));
   Navigation.registerComponent(pageNames.My, () => WrapComponent(Pages.My));
   Navigation.registerComponent(pageNames.Login, () => WrapComponent(Pages.Login));
+  Navigation.registerComponent(pageNames.List, () => WrapComponent(Pages.List));
+  Navigation.registerComponent(pageNames.Form, () => WrapComponent(Pages.Form));
 }

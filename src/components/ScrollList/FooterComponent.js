@@ -11,14 +11,19 @@ var react_1 = __importDefault(require("react"));
 var NoMore_1 = __importDefault(require("./NoMore"));
 var LoadMore_1 = __importDefault(require("./LoadMore"));
 function default_1(props) {
-    var currentPage = props.currentPage, totalPage = props.totalPage, nextPageTitle = props.nextPageTitle, noMoreTxt = props.noMoreTxt;
-    if (totalPage === 0) {
-        return null;
+    var isPage = props.isPage, currentPage = props.currentPage, totalPage = props.totalPage, nextPageTitle = props.nextPageTitle, noMoreTxt = props.noMoreTxt;
+    if (isPage) { // 分页
+        if (totalPage === 0) {
+            return null;
+        }
+        if (currentPage < totalPage) {
+            return react_1.default.createElement(LoadMore_1.default, { loadMoreTxt: nextPageTitle || '～～加载更多内容～～' });
+        }
+        if (currentPage === totalPage) {
+            return react_1.default.createElement(NoMore_1.default, { noMoreTxt: noMoreTxt || '没有更多了' });
+        }
     }
-    if (currentPage < totalPage) {
-        return react_1.default.createElement(LoadMore_1.default, { loadMoreTxt: nextPageTitle || '～～加载更多内容～～' });
-    }
-    if (currentPage === totalPage) {
+    else { // 不分页
         return react_1.default.createElement(NoMore_1.default, { noMoreTxt: noMoreTxt || '没有更多了' });
     }
     return null;

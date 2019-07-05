@@ -5,27 +5,17 @@
  */
 
 import React, { Component } from 'react';
-import {
-  Text, View, Image, TouchableHighlight
-} from 'react-native';
+import { Text, View } from 'react-native';
 
-import { ScrollList, Input, FormLayout } from '../../components';
+import { ScrollList } from '../../components';
 
 import Actions from '../../actions/actions';
 import styles from './index.style';
 
-export default class Home extends Component {
+export default class List extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: [{
-        id: 1,
-        title: '111'
-      },
-      {
-        id: 2,
-        title: '222'
-      }]
     };
   }
 
@@ -47,17 +37,11 @@ export default class Home extends Component {
   render() {
     return (
       <View style={{ flex: 1 }}>
-        <View style={styles.searchBar}>
-          <Input
-            frontIcon={<Image style={styles.frontIcon} source={require('../../assets/icons/icon-search.png')} />}
-            placeholder="输入名称进行查询"
-          />
-        </View>
         <ScrollList
           keyFiled="id"
           style={styles.container}
           renderItems={this.renderItem}
-          data={this.state.data}
+          requestAction={Actions.getList}
         />
       </View>
     );
