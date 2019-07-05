@@ -104,15 +104,20 @@ export default class ScrollLists extends React.PureComponent<Props, any> {
     if (!isPullFresh) {
       return false;
     }
-    this.setState({
-      refreshing: true
-    });
     if (data) { // 从外部传递数据的情况
-      await onRefresh && onRefresh();
-      this.setState({
-        refreshing: false
-      });
+      if (onRefresh) {
+        this.setState({
+          refreshing: true
+        });
+        await onRefresh && onRefresh();
+        this.setState({
+          refreshing: false
+        });
+      }
     } else if (requestAction) { // 接口的情况
+      this.setState({
+        refreshing: true
+      });
       const params = getRequestParam && getRequestParam(); // 获取请求参数
       const result = await requestAction({ ...params, currentPage: 1 }); // 发送请求
       if (result.errorCode === 0) {
@@ -138,7 +143,6 @@ export default class ScrollLists extends React.PureComponent<Props, any> {
     if (!isPage || currentPage >= totalPage || new Date().getTime() - this.time < 500) {
       return false;
     }
-
     if (data) {
       onNextPage && onNextPage();
     } else if (requestAction) {
@@ -180,7 +184,6 @@ export default class ScrollLists extends React.PureComponent<Props, any> {
     const {
       isPullFresh, keyFiled, noMoreTxt, nextPageTitle, emptyImg, emptyTitle, ...others
     } = this.props;
-    debugger;
     return (
       <View style={{ height: Dimensions.get('window').height - 180 }}>
         <FlatList

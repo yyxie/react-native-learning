@@ -109,22 +109,27 @@ var ScrollLists = /** @class */ (function (_super) {
                         if (!isPullFresh) {
                             return [2 /*return*/, false];
                         }
+                        if (!data) return [3 /*break*/, 3];
+                        if (!onRefresh) return [3 /*break*/, 2];
                         this.setState({
                             refreshing: true
                         });
-                        if (!data) return [3 /*break*/, 2];
                         return [4 /*yield*/, onRefresh];
                     case 1:
                         (_b.sent()) && onRefresh();
                         this.setState({
                             refreshing: false
                         });
-                        return [3 /*break*/, 4];
-                    case 2:
-                        if (!requestAction) return [3 /*break*/, 4];
+                        _b.label = 2;
+                    case 2: return [3 /*break*/, 5];
+                    case 3:
+                        if (!requestAction) return [3 /*break*/, 5];
+                        this.setState({
+                            refreshing: true
+                        });
                         params = getRequestParam && getRequestParam();
                         return [4 /*yield*/, requestAction(__assign({}, params, { currentPage: 1 }))];
-                    case 3:
+                    case 4:
                         result = _b.sent();
                         if (result.errorCode === 0) {
                             this.setState({
@@ -134,8 +139,8 @@ var ScrollLists = /** @class */ (function (_super) {
                                 refreshing: false
                             });
                         }
-                        _b.label = 4;
-                    case 4: return [2 /*return*/];
+                        _b.label = 5;
+                    case 5: return [2 /*return*/];
                 }
             });
         }); };
@@ -249,7 +254,6 @@ var ScrollLists = /** @class */ (function (_super) {
     ScrollLists.prototype.render = function () {
         var _a = this.state, data = _a.data, refreshing = _a.refreshing, totalPage = _a.totalPage, currentPage = _a.currentPage, flatListHeight = _a.flatListHeight, isPage = _a.isPage;
         var _b = this.props, isPullFresh = _b.isPullFresh, keyFiled = _b.keyFiled, noMoreTxt = _b.noMoreTxt, nextPageTitle = _b.nextPageTitle, emptyImg = _b.emptyImg, emptyTitle = _b.emptyTitle, others = __rest(_b, ["isPullFresh", "keyFiled", "noMoreTxt", "nextPageTitle", "emptyImg", "emptyTitle"]);
-        debugger;
         return (react_1.default.createElement(react_native_1.View, { style: { height: react_native_1.Dimensions.get('window').height - 180 } },
             react_1.default.createElement(react_native_1.FlatList, __assign({ style: { flex: 1 }, data: data, onRefresh: this.onRefresh, refreshing: refreshing, renderItem: this.renderItem, onEndReachedThreshold: 0.01, onEndReached: this.onNextPage, ListEmptyComponent: function () { return react_1.default.createElement(EmptyList_1.default, { flatListHeight: flatListHeight, emptyImg: emptyImg, emptyTitle: emptyTitle }); }, keyExtractor: function (item) { return item[keyFiled]; }, ListFooterComponent: function () { return react_1.default.createElement(FooterComponent_1.default, { isPage: isPage, currentPage: currentPage, totalPage: totalPage, noMoreTxt: noMoreTxt, nextPageTitle: nextPageTitle }); }, onLayout: this.onLayout }, others))));
     };
