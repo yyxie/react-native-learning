@@ -9,18 +9,16 @@ import {
   Text, View, Image
 } from 'react-native';
 
-import {Input, FormLayout } from '../../components';
+import {
+  Input, FormLayout, Form, Button
+} from '../../components';
 
 
 import styles from './index.style';
 
-export default class Form extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
+class FormInner extends Component {
 
-  async componentDidMount() {
+  componentDidMount() {
     // this.getListData();
   }
 
@@ -35,20 +33,44 @@ export default class Form extends Component {
       </View>);
   };
 
+  onPress = () => {
+    const { form } = this.props;
+    console.log(form.getAllValue());
+    console.log(form.getValueWithValidate());
+  }
+
   render() {
+    const { form } = this.props;
+    console.log(form);
     return (
       <View style={{ flex: 1 }}>
         <View style={styles.searchBar}>
-          <Input
-            frontIcon={<Image style={styles.frontIcon} source={require('../../assets/icons/icon-search.png')} />}
-            placeholder="输入名称进行查询"
-          />
+          {
+            form.creatField({
+              key: 'search1',
+              initValue: '5',
+              type: '',
+              rules: [{
+                required: true,
+                message: '名称必填'
+              }]
+            })(
+              <Input
+                frontIcon={<Image style={styles.frontIcon} source={require('../../assets/icons/icon-search.png')} />}
+                placeholder="输入名称进行查询"
+              />
+            )
+          }
         </View>
         <FormLayout label="搜索项">
-          <Input
-            frontIcon={<Image style={styles.frontIcon} source={require('../../assets/icons/icon-search.png')} />}
-            placeholder="输入名称进行查询"
-          />
+          {
+            form.creatField({ key: 'search2', initValue: '3', type: '' })(
+              <Input
+                frontIcon={<Image style={styles.frontIcon} source={require('../../assets/icons/icon-search.png')} />}
+                placeholder="输入名称进行查询"
+              />
+            )
+          }
         </FormLayout>
         <View style={{ paddingHorizontal: 20 }}>
           <FormLayout label="搜索项" mode="vertical">
@@ -58,7 +80,13 @@ export default class Form extends Component {
             />
           </FormLayout>
         </View>
+        <View style={{ paddingHorizontal: 20, paddingTop: 10 }}>
+          <Button onPress={this.onPress}>获取值</Button>
+        </View>
       </View>
     );
   }
 }
+
+debugger;
+export default Form(FormInner, {});
