@@ -25,7 +25,6 @@ export default class NoticeContent extends PureComponent {
 
   componentDidMount() {
     this.doEmitter = DeviceEventEmitter.addListener('showMessage', (type, message, duration, callBack) => {
-      debugger;
       this.setState({
         type,
         title: message,

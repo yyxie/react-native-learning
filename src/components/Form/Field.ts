@@ -2,9 +2,11 @@ import React from 'react';
 import validate from './validate';
 
 export default class Field {
-  private data?: object | null;
+  data: { [key: string]: number | string } = {};
 
-  private rules: object = {};
+  rules: { [key: string]: [] } = {};
+
+  helps: object | null = {};
 
   // @ts-ignore
   private creatField = (options: { key: string; initValue: any; rules: object }) => (WrappedComponent: React.ReactElement) => {
@@ -18,16 +20,19 @@ export default class Field {
     }
 
     const onChange = (val: any) => {
-      debugger;
       this.onChange(val, key);
     };
-    return React.cloneElement(WrappedComponent, { defaultValue: value, onChange });
+    return React.cloneElement(WrappedComponent, { defaultValue: value, onChange, name: key });
   };
 
-  constructor(fields: {rules?: object; data?: object}) {
-    const { data } = fields;
-    this.data = data;
+  constructor(fields: { [key: string]: number | string }) {
+    this.data = fields;
     // this.creatField = creatField;
+  }
+
+  setField(field: string, value: any, rules: []) {
+    this.data[field] = value;
+    this.rules[field] = rules;
   }
 
 
@@ -36,8 +41,7 @@ export default class Field {
     return this.data[field];
   }
 
-  setField(field: string, value: any, rules?: object) {
-    debugger;
+  setField(field: string, value: any, rules: []) {
     this.data[field] = value;
     this.rules[field] = rules;
   }
@@ -45,6 +49,9 @@ export default class Field {
   onChange(val: any, field: string) {
     // @ts-ignore
     this.data[field] = val;
+    const validateResult = validate(val, this.rules[field]);
+    this.data[field] = validateResult.value;
+    this.helps[field] = validateResult.error;
   }
 
   getAllValue() {
@@ -61,7 +68,6 @@ export default class Field {
       if (Object.prototype.hasOwnProperty.call(rules, key) && rules[key]) {
         // @ts-ignore
         const validateResult = validate(data[key], rules[key]);
-        debugger;
         // @ts-ignore
         values[key] = validateResult.value;
 
@@ -74,6 +80,7 @@ export default class Field {
         values[key] = data[key];
       }
     }
+    this.helps = JSON.stringify(errors) === '{}' ? null : errors;
     return { errors: JSON.stringify(errors) === '{}' ? null : errors, values };
 
   }

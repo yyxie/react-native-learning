@@ -53,7 +53,6 @@ export default class Input extends PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     let value = '';
-    debugger;
     if (props.value === undefined) { // 只有当value没有传的情况下才会从defaultValue中取值
       value = props.defaultValue === undefined ? '' : props.defaultValue;
     } else {

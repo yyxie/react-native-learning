@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 
 import {
-  Input, FormLayout, Form, Button
+  Input, Form, Button
 } from '../../components';
 
 
@@ -37,14 +37,16 @@ class FormInner extends Component {
     const { form } = this.props;
     console.log(form.getAllValue());
     console.log(form.getValueWithValidate());
+    console.log(this.inputRef);
   }
 
   render() {
     const { form } = this.props;
     console.log(form);
+    debugger;
     return (
-      <View style={{ flex: 1 }}>
-        <View style={styles.searchBar}>
+      <Form style={{ flex: 1 }}>
+        <Form.Item style={styles.searchBar}>
           {
             form.creatField({
               key: 'search1',
@@ -56,13 +58,14 @@ class FormInner extends Component {
               }]
             })(
               <Input
+                ref={ref => this.inputRef = ref}
                 frontIcon={<Image style={styles.frontIcon} source={require('../../assets/icons/icon-search.png')} />}
                 placeholder="输入名称进行查询"
               />
             )
           }
-        </View>
-        <FormLayout label="搜索项">
+        </Form.Item>
+        <Form.Item label="搜索项">
           {
             form.creatField({ key: 'search2', initValue: '3', type: '' })(
               <Input
@@ -71,22 +74,19 @@ class FormInner extends Component {
               />
             )
           }
-        </FormLayout>
-        <View style={{ paddingHorizontal: 20 }}>
-          <FormLayout label="搜索项" mode="vertical">
-            <Input
-              frontIcon={<Image style={styles.frontIcon} source={require('../../assets/icons/icon-search.png')} />}
-              placeholder="输入名称进行查询"
-            />
-          </FormLayout>
-        </View>
+        </Form.Item>
+        <Form.Item label="搜索项" mode="vertical">
+          <Input
+            frontIcon={<Image style={styles.frontIcon} source={require('../../assets/icons/icon-search.png')} />}
+            placeholder="输入名称进行查询"
+          />
+        </Form.Item>
         <View style={{ paddingHorizontal: 20, paddingTop: 10 }}>
           <Button onPress={this.onPress}>获取值</Button>
         </View>
-      </View>
+      </Form>
     );
   }
 }
 
-debugger;
-export default Form(FormInner, {});
+export default Form.create(FormInner, {});

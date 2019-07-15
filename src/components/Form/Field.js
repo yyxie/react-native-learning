@@ -2,7 +2,9 @@ import React from 'react';
 import validate from './validate';
 export default class Field {
     constructor(fields) {
+        this.data = {};
         this.rules = {};
+        this.helps = {};
         // @ts-ignore
         this.creatField = (options) => (WrappedComponent) => {
             const { key, initValue, rules } = options;
@@ -15,27 +17,31 @@ export default class Field {
                 this.setField(key, initValue, rules);
             }
             const onChange = (val) => {
-                debugger;
                 this.onChange(val, key);
             };
-            return React.cloneElement(WrappedComponent, { defaultValue: value, onChange });
+            return React.cloneElement(WrappedComponent, { defaultValue: value, onChange, name: key });
         };
-        const { data } = fields;
-        this.data = data;
+        this.data = fields;
         // this.creatField = creatField;
+    }
+    setField(field, value, rules) {
+        this.data[field] = value;
+        this.rules[field] = rules;
     }
     getField(field) {
         // @ts-ignore
         return this.data[field];
     }
     setField(field, value, rules) {
-        debugger;
         this.data[field] = value;
         this.rules[field] = rules;
     }
     onChange(val, field) {
         // @ts-ignore
         this.data[field] = val;
+        const validateResult = validate(val, this.rules[field]);
+        this.data[field] = validateResult.value;
+        this.helps[field] = validateResult.error;
     }
     getAllValue() {
         return this.data;
@@ -49,7 +55,6 @@ export default class Field {
             if (Object.prototype.hasOwnProperty.call(rules, key) && rules[key]) {
                 // @ts-ignore
                 const validateResult = validate(data[key], rules[key]);
-                debugger;
                 // @ts-ignore
                 values[key] = validateResult.value;
                 if (validateResult.error) {
@@ -62,6 +67,7 @@ export default class Field {
                 values[key] = data[key];
             }
         }
+        this.helps = JSON.stringify(errors) === '{}' ? null : errors;
         return { errors: JSON.stringify(errors) === '{}' ? null : errors, values };
     }
 }

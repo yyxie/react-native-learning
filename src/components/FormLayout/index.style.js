@@ -3,35 +3,42 @@ export default StyleSheet.create({
     inlineFromLayoutWrap: {
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'center',
         paddingHorizontal: 5,
+        alignItems: 'flex-start'
     },
     inlineFormLabel: {
         fontSize: 15,
         paddingRight: 5,
-        lineHeight: 38,
+        paddingVertical: 5
+    },
+    inlineFormComponentWrap: {
+        flex: 1,
     },
     formComponent: {
-        flex: 1,
-        height: 38,
-        justifyContent: 'center',
+        width: '100%',
+        paddingVertical: 5,
         borderWidth: 1,
         borderStyle: 'solid',
         borderColor: '#E1E1E1',
         borderRadius: 2,
     },
     verticalFromLayoutWrap: {
-        height: 76,
-        marginTop: 18
+        marginTop: 18,
+        paddingHorizontal: 5,
     },
     verticalFormLabel: {
         fontSize: 15,
         paddingRight: 5,
-        lineHeight: 38,
+        paddingVertical: 5,
     },
     verticalFormComponent: {
-        flexDirection: 'column',
-        alignItems: 'center',
-        height: 38,
+        lineHeight: 38,
     },
+    verticalFormComponentWrap: {},
+    help: {
+        color: 'red',
+        textAlign: 'left',
+        width: '100%',
+        paddingVertical: 5,
+    }
 });
