@@ -11,11 +11,13 @@ import Validate from '../Validate';
 const validate = (value, rules) => {
     let val = '';
     const errors = [];
-    for (let i = 0, len = rules.length; i < len; ++i) {
-        const rule = rules[i];
-        const validateData = Validate(rule, value);
-        val = validateData.val;
-        errors.push(validateData.error);
+    if (rules) {
+        for (let i = 0, len = rules.length; i < len; ++i) {
+            const rule = rules[i];
+            const validateData = Validate(rule, value);
+            val = validateData.val;
+            errors.push(validateData.error);
+        }
     }
     return {
         value: val,

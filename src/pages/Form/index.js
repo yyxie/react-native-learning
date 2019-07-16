@@ -48,7 +48,7 @@ class FormInner extends Component {
       <Form style={{ flex: 1 }}>
         <Form.Item style={styles.searchBar}>
           {
-            form.creatField({
+            form.getFieldDecorator({
               key: 'search1',
               initValue: '5',
               type: '',
@@ -67,7 +67,7 @@ class FormInner extends Component {
         </Form.Item>
         <Form.Item label="搜索项">
           {
-            form.creatField({ key: 'search2', initValue: '3', type: '' })(
+            form.getFieldDecorator({ key: 'search2', initValue: '3', type: '' })(
               <Input
                 frontIcon={<Image style={styles.frontIcon} source={require('../../assets/icons/icon-search.png')} />}
                 placeholder="输入名称进行查询"

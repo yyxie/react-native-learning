@@ -21,6 +21,7 @@ export default StyleSheet.create({
         borderStyle: 'solid',
         borderColor: '#E1E1E1',
         borderRadius: 2,
+        marginBottom: 5,
     },
     verticalFromLayoutWrap: {
         marginTop: 18,
@@ -32,7 +33,7 @@ export default StyleSheet.create({
         paddingVertical: 5,
     },
     verticalFormComponent: {
-        lineHeight: 38,
+    // paddingVertical: 5,
     },
     verticalFormComponentWrap: {},
     help: {

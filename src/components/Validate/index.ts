@@ -11,58 +11,59 @@ interface RuleType {
 }
 
 export default function (rule: RuleType, value: any) {
+  debugger;
   let val = '';
-  const error = [];
+  let error = {};
   if (Object.prototype.hasOwnProperty.call(rule, 'required')) {
     if (value) {
       val = value;
     } else {
-      error.push({ message: rule.message });
+      error = { message: rule.message };
     }
   }
   if (value && /^[0-9]*$/.test(value)) { // 数字
     if (Object.prototype.hasOwnProperty.call(rule, 'min')) {
-      if (value < rule.min) {
-        error.push({ message: rule.message });
+      if (value && value < rule.min) {
+        error = { message: rule.message };
       } else {
         val = value;
       }
     }
     if (Object.prototype.hasOwnProperty.call(rule, 'max')) {
-      if (value > rule.max) {
-        error.push({ message: rule.message });
+      if (value && value > rule.max) {
+        error = { message: rule.message };
       } else {
         val = value;
       }
     }
   } else { // 字符串
     if (Object.prototype.hasOwnProperty.call(rule, 'min')) {
-      if (value.length < rule.min) {
-        error.push({ message: rule.message });
+      if (value && value.length < rule.min) {
+        error = { message: rule.message };
       } else {
         val = value;
       }
     }
     if (Object.prototype.hasOwnProperty.call(rule, 'max')) {
-      if (value.length > rule.max) {
-        error.push({ message: rule.message });
+      if (value && value.length > rule.max) {
+        error = { message: rule.message };
       } else {
         val = value;
       }
     }
   }
   if (Object.prototype.hasOwnProperty.call(rule, 'pattern')) {
-    if (rule.pattern.test(value)) {
+    if (value && rule.pattern.test(value)) {
       val = value;
     } else {
-      error.push({ message: rule.message });
+      error = { message: rule.message };
     }
   }
   if (Object.prototype.hasOwnProperty.call(rule, 'validator')) {
-    if (rule.validator(value)) {
+    if (value && rule.validator(value)) {
       val = value;
     } else {
-      error.push({ message: rule.message });
+      error = { message: rule.message };
     }
   }
   return {

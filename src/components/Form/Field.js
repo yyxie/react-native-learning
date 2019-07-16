@@ -1,36 +1,35 @@
-import React from 'react';
 import validate from './validate';
 export default class Field {
     constructor(fields) {
         this.data = {};
         this.rules = {};
         this.helps = {};
-        // @ts-ignore
-        this.creatField = (options) => (WrappedComponent) => {
-            const { key, initValue, rules } = options;
-            console.log(key, initValue);
-            let value = initValue;
-            if (this.getField(key)) {
-                value = this.getField(key);
-            }
-            else {
-                this.setField(key, initValue, rules);
-            }
-            const onChange = (val) => {
-                this.onChange(val, key);
-            };
-            return React.cloneElement(WrappedComponent, { defaultValue: value, onChange, name: key });
-        };
         this.data = fields;
         // this.creatField = creatField;
     }
-    setField(field, value, rules) {
-        this.data[field] = value;
-        this.rules[field] = rules;
-    }
+    /*  // @ts-ignore
+    creatField = (options: { key: string; initValue: any; rules: [] }) => (WrappedComponent: React.ReactElement) => {
+      const { key, initValue, rules } = options;
+      console.log(key, initValue);
+      let value = initValue;
+      if (this.getField(key)) {
+        value = this.getField(key);
+      } else {
+        this.setField(key, initValue, rules);
+      }
+  
+      const onChange = (val: any) => {
+        this.onChange(val, key);
+      };
+      return React.cloneElement(WrappedComponent, { defaultValue: value, onChange, name: key });
+    }; */
     getField(field) {
         // @ts-ignore
         return this.data[field];
+    }
+    getHelps() {
+        console.log('helps', this.helps);
+        return this.helps;
     }
     setField(field, value, rules) {
         this.data[field] = value;
@@ -68,6 +67,7 @@ export default class Field {
             }
         }
         this.helps = JSON.stringify(errors) === '{}' ? null : errors;
+        console.log('errors', errors);
         return { errors: JSON.stringify(errors) === '{}' ? null : errors, values };
     }
 }

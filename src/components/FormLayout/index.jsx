@@ -30,7 +30,7 @@ export default class FormItem extends React.PureComponent {
         debugger;
         if (this.getControls(this.props.children, false)[0]) {
             const child = this.getControls(this.props.children, false)[0];
-            const { errors } = child && child.props && child.props.v;
+            const { errors } = child && child.props;
             if (errors) {
                 return intersperseSpace(errors.map((e, index) => {
                     let node = null;
@@ -48,27 +48,21 @@ export default class FormItem extends React.PureComponent {
         return '';
     }
     render() {
-        /* const help = this.getHelpMessage();
-        const renderHelp = function (help: any) {
-          return (
-            <Animate
-              transitionName="show-help"
-              component=""
-              transitionAppear
-              key="help"
-            >
-              { help }
-            </Animate>
-          );
-        }; */
         const { mode, label, children, layoutStyle, labelStyle, componentStyle } = this.props;
+        let help = '';
+        try {
+            help = children.props.errors[0].message;
+        }
+        catch (_a) {
+            // a.b.c.d.e.f 不存在
+        }
         return (<View style={[styles[`${mode}FromLayoutWrap`], layoutStyle]}>
         {!!label && <Text style={[styles[`${mode}FormLabel`], labelStyle]}>{`${label}:`}</Text>}
         <View style={[styles[`${mode}FormComponentWrap`], componentStyle]}>
           <View style={[styles.formComponent]}>
             {children}
           </View>
-          <Text style={{ color: 'red' }}>{this.props.help}</Text>
+          <Text style={[styles.help]}>{help}</Text>
         </View>
       </View>);
     }

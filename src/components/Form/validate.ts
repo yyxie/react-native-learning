@@ -20,11 +20,13 @@ interface RuleType {
 const validate = (value: any, rules: RuleType[]) => {
   let val = '';
   const errors = [];
-  for (let i = 0, len = rules.length; i < len; ++i) {
-    const rule = rules[i];
-    const validateData = Validate(rule, value);
-    val = validateData.val;
-    errors.push(validateData.error);
+  if (rules) {
+    for (let i = 0, len = rules.length; i < len; ++i) {
+      const rule = rules[i];
+      const validateData = Validate(rule, value);
+      val = validateData.val;
+      errors.push(validateData.error);
+    }
   }
 
 
