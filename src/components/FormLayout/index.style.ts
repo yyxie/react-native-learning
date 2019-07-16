@@ -5,33 +5,42 @@ export default StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     paddingHorizontal: 5,
-    alignItems: 'flex-start'
+    alignItems: 'flex-start',
   },
   inlineFormLabel: {
+    display: 'flex',
+    justifyContent: 'center',
+    height: 38,
+    marginRight: 5,
+  },
+  inlineFormLabelTxt: {
     fontSize: 15,
-    paddingRight: 5,
-    paddingVertical: 5
   },
   inlineFormComponentWrap: {
     flex: 1,
   },
   formComponent: {
+    display: 'flex',
+    justifyContent: 'center',
+    height: 38,
     width: '100%',
-    paddingVertical: 5,
     borderWidth: 1,
     borderStyle: 'solid',
     borderColor: '#E1E1E1',
-    borderRadius: 2,
-    marginBottom: 5,
+    borderRadius: 5,
   },
   verticalFromLayoutWrap: {
     marginTop: 18,
     paddingHorizontal: 5,
   },
   verticalFormLabel: {
+    display: 'flex',
+    justifyContent: 'center',
+    height: 38,
+    marginRight: 5,
+  },
+  verticalFormLabelTxt: {
     fontSize: 15,
-    paddingRight: 5,
-    paddingVertical: 5,
   },
   verticalFormComponent: {
     // paddingVertical: 5,
@@ -42,6 +51,6 @@ export default StyleSheet.create({
     color: 'red',
     textAlign: 'left',
     width: '100%',
-    paddingVertical: 5,
+    lineHeight: 38,
   }
 });

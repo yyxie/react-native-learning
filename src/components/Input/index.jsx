@@ -26,6 +26,7 @@ export default class Input extends PureComponent {
          * @param val 值
          */
         this.onChange = (value) => {
+            console.log('input change', value);
             debugger;
             this.setState({
                 value

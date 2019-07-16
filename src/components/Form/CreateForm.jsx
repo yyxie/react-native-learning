@@ -30,6 +30,7 @@ export default function (WrapComponent, data) {
         getForm() {
             return {
                 getFieldDecorator: this.creatField,
+                getValueWithValidate: fieldStore.getValueWithValidate
             };
         }
         render() {

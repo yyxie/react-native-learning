@@ -6,7 +6,7 @@ class Form extends React.Component {
     render() {
         return (<View>
         {this.props.children.map((child) => {
-            return React.cloneElement(child, { help: 'dddd' });
+            return React.cloneElement(child);
         })}
       </View>);
     }

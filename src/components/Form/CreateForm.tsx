@@ -7,6 +7,7 @@ export default function (WrapComponent: React.ReactNode, data: { [key: string]: 
     getForm() {
       return {
         getFieldDecorator: this.creatField,
+        getValueWithValidate: fieldStore.getValueWithValidate
       };
     }
 

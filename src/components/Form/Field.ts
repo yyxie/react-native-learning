@@ -5,31 +5,12 @@ export default class Field {
 
   private rules: { [key: string]: [] } = {};
 
-  private helps: object | null = {};
+  private helps: { [key: string]: [] } = {};
 
 
   constructor(fields: { [key: string]: number | string }) {
     this.data = fields;
-    // this.creatField = creatField;
   }
-
-  /*  // @ts-ignore
-  creatField = (options: { key: string; initValue: any; rules: [] }) => (WrappedComponent: React.ReactElement) => {
-    const { key, initValue, rules } = options;
-    console.log(key, initValue);
-    let value = initValue;
-    if (this.getField(key)) {
-      value = this.getField(key);
-    } else {
-      this.setField(key, initValue, rules);
-    }
-
-    const onChange = (val: any) => {
-      this.onChange(val, key);
-    };
-    return React.cloneElement(WrappedComponent, { defaultValue: value, onChange, name: key });
-  }; */
-
 
   getField(field: string) {
     // @ts-ignore
@@ -37,7 +18,6 @@ export default class Field {
   }
 
   getHelps() {
-    console.log('helps', this.helps);
     return this.helps;
   }
 
@@ -58,8 +38,8 @@ export default class Field {
     return this.data;
   }
 
-  getValueWithValidate() {
-    const { data, rules } = this;
+  getValueWithValidate=() => {
+  /*  const { data, rules } = this;
 
     const values = {};
     const errors = {};
@@ -79,10 +59,10 @@ export default class Field {
         // @ts-ignore
         values[key] = data[key];
       }
-    }
-    this.helps = JSON.stringify(errors) === '{}' ? null : errors;
-    console.log('errors', errors);
-    return { errors: JSON.stringify(errors) === '{}' ? null : errors, values };
+    } */
+    // this.helps = JSON.stringify(errors) === '{}' ? null : errors;
+    debugger;
+    return { errors: JSON.stringify(this.helps) === '{}' ? null : this.helps, values: this.data };
 
   }
 

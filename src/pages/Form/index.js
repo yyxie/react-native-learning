@@ -35,7 +35,6 @@ class FormInner extends Component {
 
   onPress = () => {
     const { form } = this.props;
-    console.log(form.getAllValue());
     console.log(form.getValueWithValidate());
     console.log(this.inputRef);
   }
@@ -67,9 +66,16 @@ class FormInner extends Component {
         </Form.Item>
         <Form.Item label="搜索项">
           {
-            form.getFieldDecorator({ key: 'search2', initValue: '3', type: '' })(
+            form.getFieldDecorator({
+              key: 'search2',
+              initValue: '3',
+              type: '',
+              rules: [{
+                type: 'number',
+                message: '请输入数字'
+              }]
+            })(
               <Input
-                frontIcon={<Image style={styles.frontIcon} source={require('../../assets/icons/icon-search.png')} />}
                 placeholder="输入名称进行查询"
               />
             )

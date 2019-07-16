@@ -8,6 +8,7 @@ interface RuleType {
   pattern: RegExp;
   validator: (value: any) => boolean;
   required: boolean;
+  type: string;
 }
 
 export default function (rule: RuleType, value: any) {
@@ -16,6 +17,15 @@ export default function (rule: RuleType, value: any) {
   let error = {};
   if (Object.prototype.hasOwnProperty.call(rule, 'required')) {
     if (value) {
+      val = value;
+    } else {
+      error = { message: rule.message };
+    }
+  }
+  if (Object.prototype.hasOwnProperty.call(rule, 'type')) {
+    const pattern: {[key: string]: RegExp} = { number: /^[0-9]*$/ };
+
+    if (pattern[rule.type].test(value)) {
       val = value;
     } else {
       error = { message: rule.message };

@@ -10,6 +10,15 @@ export default function (rule, value) {
             error = { message: rule.message };
         }
     }
+    if (Object.prototype.hasOwnProperty.call(rule, 'type')) {
+        const pattern = { number: /^[0-9]*$/ };
+        if (pattern[rule.type].test(value)) {
+            val = value;
+        }
+        else {
+            error = { message: rule.message };
+        }
+    }
     if (value && /^[0-9]*$/.test(value)) { // 数字
         if (Object.prototype.hasOwnProperty.call(rule, 'min')) {
             if (value && value < rule.min) {
