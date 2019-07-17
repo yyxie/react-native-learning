@@ -35,14 +35,17 @@ class FormInner extends Component {
 
   onPress = () => {
     const { form } = this.props;
-    console.log(form.getValueWithValidate());
-    console.log(this.inputRef);
+    form.getValueWithValidate((errors, values) => {
+      if (!errors) {
+        console.log(values);
+      } else {
+        console.log(errors);
+      }
+    });
   }
 
   render() {
     const { form } = this.props;
-    console.log(form);
-    debugger;
     return (
       <Form style={{ flex: 1 }}>
         <Form.Item style={styles.searchBar}>
@@ -51,6 +54,7 @@ class FormInner extends Component {
               key: 'search1',
               initValue: '5',
               type: '',
+              validateTrigger: 'save',
               rules: [{
                 required: true,
                 message: '名称必填'

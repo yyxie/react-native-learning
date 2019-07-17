@@ -7,17 +7,20 @@ export default function (WrapComponent, data) {
             super(...arguments);
             // @ts-ignore
             this.creatField = (options) => (WrappedComponent) => {
-                const { key, initValue, rules } = options;
+                const { key, initValue, rules, validateTrigger = 'onChange' } = options;
                 console.log(key, initValue);
                 let value = initValue;
                 if (fieldStore.getField(key)) {
                     value = fieldStore.getField(key);
                 }
                 else {
-                    fieldStore.setField(key, initValue, rules);
+                    fieldStore.setField(key, initValue, rules, validateTrigger);
                 }
                 const onChange = (val) => {
                     fieldStore.onChange(val, key);
+                    if (validateTrigger === 'onChange') {
+                        fieldStore.setHelps(key);
+                    }
                     this.forceUpdate();
                 };
                 // @ts-ignore
@@ -26,11 +29,18 @@ export default function (WrapComponent, data) {
                     defaultValue: value, onChange, name: key, errors
                 });
             };
+            this.getValueWithValidate = (callBack) => {
+                fieldStore.cacheHelpToHelps();
+                this.forceUpdate();
+                const helps = fieldStore.getHelps();
+                const values = fieldStore.getData();
+                callBack && callBack(JSON.stringify(helps) === '{}' ? null : helps, values);
+            };
         }
         getForm() {
             return {
                 getFieldDecorator: this.creatField,
-                getValueWithValidate: fieldStore.getValueWithValidate
+                getValueWithValidate: this.getValueWithValidate
             };
         }
         render() {

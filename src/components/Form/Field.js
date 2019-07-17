@@ -4,53 +4,34 @@ export default class Field {
         this.data = {};
         this.rules = {};
         this.helps = {};
-        this.getValueWithValidate = () => {
-            /*  const { data, rules } = this;
-          
-              const values = {};
-              const errors = {};
-              for (const key in data) {
-                // @ts-ignore
-                if (Object.prototype.hasOwnProperty.call(rules, key) && rules[key]) {
-                  // @ts-ignore
-                  const validateResult = validate(data[key], rules[key]);
-                  // @ts-ignore
-                  values[key] = validateResult.value;
-          
-                  if (validateResult.error) {
-                    // @ts-ignore
-                    errors[key] = validateResult.error;
-                  }
-                } else if (Object.prototype.hasOwnProperty.call(data, key)) {
-                  // @ts-ignore
-                  values[key] = data[key];
-                }
-              } */
-            // this.helps = JSON.stringify(errors) === '{}' ? null : errors;
-            debugger;
-            return { errors: JSON.stringify(this.helps) === '{}' ? null : this.helps, values: this.data };
-        };
+        this.cacheError = {};
+        this.validateTriggers = {};
         this.data = fields;
     }
     getField(field) {
-        // @ts-ignore
         return this.data[field];
     }
     getHelps() {
         return this.helps;
     }
-    setField(field, value, rules) {
+    getData() {
+        return this.data;
+    }
+    setHelps(field) {
+        this.helps[field] = this.cacheError[field];
+    }
+    cacheHelpToHelps() {
+        this.helps = Object.assign({}, this.cacheError);
+    }
+    setField(field, value, rules, validateTrigger) {
         this.data[field] = value;
         this.rules[field] = rules;
+        this.validateTriggers[field] = validateTrigger;
     }
     onChange(val, field) {
-        // @ts-ignore
         this.data[field] = val;
         const validateResult = validate(val, this.rules[field]);
         this.data[field] = validateResult.value;
-        this.helps[field] = validateResult.error;
-    }
-    getAllValue() {
-        return this.data;
+        this.cacheError[field] = [...validateResult.error];
     }
 }

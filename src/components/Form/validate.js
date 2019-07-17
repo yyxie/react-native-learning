@@ -21,7 +21,7 @@ const validate = (value, rules) => {
     }
     return {
         value: val,
-        error: errors.length === 0 ? null : errors
+        error: errors
     };
 };
 export default validate;

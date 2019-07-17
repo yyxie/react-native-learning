@@ -1,5 +1,4 @@
 export default function (rule, value) {
-    debugger;
     let val = '';
     let error = {};
     if (Object.prototype.hasOwnProperty.call(rule, 'required')) {

@@ -12,7 +12,6 @@ interface RuleType {
 }
 
 export default function (rule: RuleType, value: any) {
-  debugger;
   let val = '';
   let error = {};
   if (Object.prototype.hasOwnProperty.call(rule, 'required')) {

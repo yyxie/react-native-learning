@@ -1,5 +1,6 @@
 import validate from './validate';
 
+
 export default class Field {
   private data: { [key: string]: number | string } = {};
 
@@ -7,13 +8,15 @@ export default class Field {
 
   private helps: { [key: string]: [] } = {};
 
+  private cacheError: { [key: string]: [] } = {};
+
+  private validateTriggers: { [key: string]: number | string } = {};
 
   constructor(fields: { [key: string]: number | string }) {
     this.data = fields;
   }
 
   getField(field: string) {
-    // @ts-ignore
     return this.data[field];
   }
 
@@ -21,49 +24,29 @@ export default class Field {
     return this.helps;
   }
 
-  setField(field: string, value: any, rules: []) {
-    this.data[field] = value;
-    this.rules[field] = rules;
-  }
-
-  onChange(val: any, field: string) {
-    // @ts-ignore
-    this.data[field] = val;
-    const validateResult = validate(val, this.rules[field]);
-    this.data[field] = validateResult.value;
-    this.helps[field] = validateResult.error;
-  }
-
-  getAllValue() {
+  getData() {
     return this.data;
   }
 
-  getValueWithValidate=() => {
-  /*  const { data, rules } = this;
+  setHelps(field: string) {
+    this.helps[field] = this.cacheError[field];
+  }
 
-    const values = {};
-    const errors = {};
-    for (const key in data) {
-      // @ts-ignore
-      if (Object.prototype.hasOwnProperty.call(rules, key) && rules[key]) {
-        // @ts-ignore
-        const validateResult = validate(data[key], rules[key]);
-        // @ts-ignore
-        values[key] = validateResult.value;
+  cacheHelpToHelps() {
+    this.helps = { ...this.cacheError };
+  }
 
-        if (validateResult.error) {
-          // @ts-ignore
-          errors[key] = validateResult.error;
-        }
-      } else if (Object.prototype.hasOwnProperty.call(data, key)) {
-        // @ts-ignore
-        values[key] = data[key];
-      }
-    } */
-    // this.helps = JSON.stringify(errors) === '{}' ? null : errors;
-    debugger;
-    return { errors: JSON.stringify(this.helps) === '{}' ? null : this.helps, values: this.data };
+  setField(field: string, value: any, rules: [], validateTrigger: string) {
+    this.data[field] = value;
+    this.rules[field] = rules;
+    this.validateTriggers[field] = validateTrigger;
+  }
 
+  onChange(val: any, field: string) {
+    this.data[field] = val;
+    const validateResult = validate(val, this.rules[field]);
+    this.data[field] = validateResult.value;
+    this.cacheError[field] = [...validateResult.error];
   }
 
 }

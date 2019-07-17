@@ -11,6 +11,7 @@ interface RuleType {
   pattern: RegExp;
   validator: (value: any) => boolean;
   required: boolean;
+  type: string;
 }
 /**
  * 校验方法
@@ -32,7 +33,7 @@ const validate = (value: any, rules: RuleType[]) => {
 
   return {
     value: val,
-    error: errors.length === 0 ? null : errors
+    error: errors
   };
 };
 
