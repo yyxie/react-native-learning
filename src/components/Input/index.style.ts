@@ -6,8 +6,12 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingBottom: 0,
-    paddingLeft: 5
+    paddingVertical: 5,
+    paddingLeft: 5,
+    borderWidth: 1,
+    borderStyle: 'solid',
+    borderColor: '#E1E1E1',
+    borderRadius: 5,
   },
   textInputStyle: {
     flex: 1,

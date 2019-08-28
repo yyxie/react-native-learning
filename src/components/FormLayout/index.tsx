@@ -44,7 +44,6 @@ export default class FormItem extends React.PureComponent<Props, any> {
           <View style={[styles.formComponent]}>
             {children}
           </View>
-          <Text style={[styles.help]}>{help}</Text>
         </View>
       </View>
     );

@@ -4,8 +4,11 @@ export default StyleSheet.create({
   inlineFromLayoutWrap: {
     display: 'flex',
     flexDirection: 'row',
-    paddingHorizontal: 5,
     alignItems: 'flex-start',
+    paddingVertical: 5,
+    borderBottomWidth: 1,
+    borderStyle: 'solid',
+    borderColor: '#eee',
   },
   inlineFormLabel: {
     display: 'flex',
@@ -24,14 +27,13 @@ export default StyleSheet.create({
     justifyContent: 'center',
     height: 38,
     width: '100%',
-    borderWidth: 1,
-    borderStyle: 'solid',
-    borderColor: '#E1E1E1',
-    borderRadius: 5,
   },
   verticalFromLayoutWrap: {
     marginTop: 18,
     paddingHorizontal: 5,
+    borderBottomWidth: 1,
+    borderStyle: 'solid',
+    borderColor: '#eee',
   },
   verticalFormLabel: {
     display: 'flex',

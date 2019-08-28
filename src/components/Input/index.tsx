@@ -15,7 +15,7 @@ import {
 } from 'react-native';
 
 // @ts-ignore
-import styles from './style';
+import styles from './index.style';
 
 interface Props {
   // 默认值
@@ -39,6 +39,7 @@ interface Props {
 
   // 输入框前的icon
   frontIcon?: React.ReactNode;
+
   // 其他
   [propsName: string]: any;
 }
@@ -67,7 +68,8 @@ export default class Input extends PureComponent<Props, State> {
   static defaultProps = {
     placeholder: '请输入',
     isShowClear: false,
-    clearIcon: require('./icon/icon-clear.png')
+    clearIcon: require('./icon/icon-clear.png'),
+    noBorder: true
   };
 
   static getDerivedStateFromProps(nextProps: Props, prevState: State) {
@@ -82,12 +84,11 @@ export default class Input extends PureComponent<Props, State> {
   }
 
   /**
-   * 内容change
-   * @param val 值
-   */
+     * 内容change
+     * @param val 值
+     */
   onChange = (value: string) => {
     console.log('input change', value);
-    debugger;
     this.setState({
       value
     });
@@ -96,8 +97,8 @@ export default class Input extends PureComponent<Props, State> {
   };
 
   /**
-   * 清空内容
-   */
+     * 清空内容
+     */
   clear = () => {
     this.setState({
       value: ''
@@ -106,9 +107,9 @@ export default class Input extends PureComponent<Props, State> {
   };
 
   /**
-   * 选中历史项
-   * @param item
-   */
+     * 选中历史项
+     * @param item
+     */
   historyItemPress = (text: string) => {
     this.setState({
       value: text,
@@ -118,11 +119,11 @@ export default class Input extends PureComponent<Props, State> {
   };
 
   /**
-   * 渲染历史记录下拉
-   * @param item 当前项
-   * @param i 当前下标
-   * @returns {*}
-   */
+     * 渲染历史记录下拉
+     * @param item 当前项
+     * @param i 当前下标
+     * @returns {*}
+     */
   renderHistory = (itemObj: any) => {
     const { item } = itemObj;
     const { renderHistory } = this.props;
@@ -140,7 +141,17 @@ export default class Input extends PureComponent<Props, State> {
   render() {
     const { value } = this.state;
     const {
-      isShowClear, defaultValue, placeholder, historyList, inputStyle, inputWrapStyle, wrapAllStyle, clearIcon, frontIcon, ...others
+      isShowClear,
+      defaultValue,
+      placeholder,
+      historyList,
+      inputStyle,
+      inputWrapStyle,
+      wrapAllStyle,
+      clearIcon,
+      frontIcon,
+      noBorder,
+      ...others
     } = this.props;
     return (
       <View style={[{
@@ -148,8 +159,8 @@ export default class Input extends PureComponent<Props, State> {
         position: 'relative'
       }, wrapAllStyle]}
       >
-        <View style={[styles.textInputWrapper, inputWrapStyle]}>
-          {frontIcon }
+        <View style={[styles.textInputWrapper, inputWrapStyle, noBorder && { borderWidth: 0 }]}>
+          {frontIcon}
           <TextInput
             style={[styles.textInputStyle, inputStyle]}
             onChangeText={this.onChange}
