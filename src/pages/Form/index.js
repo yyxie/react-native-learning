@@ -10,22 +10,29 @@ import {
 } from 'react-native';
 
 import {
-  Input, Form, Button
+  Input, Form, Button, Switch, Modal
 } from '../../components';
 
 
 import styles from './index.style';
 
 class FormInner extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      modalVisible: false
+    };
+  }
 
   componentDidMount() {
     // this.getListData();
+
   }
 
   /**
-   * 渲染列表
-   * @param item
-   */
+     * 渲染列表
+     * @param item
+     */
   renderItem = (item) => {
     return (
       <View style={styles.listItem} key={item.id}>
@@ -34,67 +41,80 @@ class FormInner extends Component {
   };
 
   onPress = () => {
-    const { form } = this.props;
-    form.getValueWithValidate((errors, values) => {
-      if (!errors) {
-        console.log(values);
-      } else {
-        console.log(errors);
-      }
+    this.setState({
+      modalVisible: true
+    });
+    /* const { form } = this.props;
+            form.getValueWithValidate((errors, values) => {
+              if (!errors) {
+                console.log(values);
+              } else {
+                console.log(errors);
+              }
+            }); */
+  }
+
+  onModalClose = () => {
+    this.setState({
+      modalVisible: false
     });
   }
 
   render() {
     const { form } = this.props;
+    const { modalVisible } = this.state;
     return (
-      <Form style={{ flex: 1 }}>
-        <Form.Item style={styles.searchBar}>
-          {
-            form.getFieldDecorator({
-              key: 'search1',
-              initValue: '5',
-              type: '',
-              validateTrigger: 'save',
-              rules: [{
-                required: true,
-                message: '名称必填'
-              }]
-            })(
-              <Input
-                ref={ref => this.inputRef = ref}
-                frontIcon={<Image style={styles.frontIcon} source={require('../../assets/icons/icon-search.png')} />}
-                placeholder="输入名称进行查询"
-              />
-            )
-          }
-        </Form.Item>
-        <Form.Item label="搜索项">
-          {
-            form.getFieldDecorator({
-              key: 'search2',
-              initValue: '3',
-              type: '',
-              rules: [{
-                type: 'number',
-                message: '请输入数字'
-              }]
-            })(
-              <Input
-                placeholder="输入名称进行查询"
-              />
-            )
-          }
-        </Form.Item>
-        <Form.Item label="搜索项" mode="vertical">
-          <Input
-            frontIcon={<Image style={styles.frontIcon} source={require('../../assets/icons/icon-search.png')} />}
-            placeholder="输入名称进行查询"
-          />
-        </Form.Item>
-        <View style={{ paddingHorizontal: 20, paddingTop: 10 }}>
-          <Button onPress={this.onPress}>获取值</Button>
-        </View>
-      </Form>
+      <View>
+        <Form style={{ paddingHorizontal: 5 }}>
+          <Form.Item style={styles.searchBar}>
+            {
+              form.getFieldDecorator({
+                key: 'search1',
+                initValue: '5',
+                type: '',
+                validateTrigger: 'save',
+                rules: [{
+                  required: true,
+                  message: '名称必填'
+                }]
+              })(
+                <Input
+                  ref={ref => this.inputRef = ref}
+                  frontIcon={<Image
+                    style={styles.frontIcon}
+                    source={require('../../assets/icons/icon-search.png')}
+                  />}
+                  placeholder="输入名称进行查询"
+                />
+              )
+            }
+          </Form.Item>
+          <Form.Item label="搜索项">
+            <Input
+              placeholder="输入名称进行查询"
+            />
+          </Form.Item>
+          <Form.Item label="搜索项" mode="vertical">
+            <Input
+              frontIcon={<Image
+                style={styles.frontIcon}
+                source={require('../../assets/icons/icon-search.png')}
+              />}
+              placeholder="输入名称进行查询"
+            />
+          </Form.Item>
+          <Form.Item label="搜索项" mode="vertical">
+            <Switch value={1} />
+          </Form.Item>
+          <View style={{ paddingHorizontal: 20, paddingTop: 10 }}>
+            <Button onPress={this.onPress}>获取值</Button>
+          </View>
+
+        </Form>
+        <Modal visible={modalVisible} onClose={this.onModalClose}>
+          <Text>ffff</Text>
+        </Modal>
+      </View>
     );
   }
 }

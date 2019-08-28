@@ -6,3 +6,5 @@ export { default as Menu } from './Menu';
 export { default as Notice } from './Notice';
 export { default as FormLayout } from './FormLayout';
 export { default as Form } from './Form';
+export { default as Switch } from './Switch';
+export { default as Modal } from './Modal';
