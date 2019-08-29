@@ -4,7 +4,6 @@
     "moduleResolution": "node",
     "esModuleInterop": true,
     "experimentalDecorators": true,
-    "jsx": "preserve",
     "noUnusedParameters": true,
     "noUnusedLocals": true,
     "noImplicitAny": true,
