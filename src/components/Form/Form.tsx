@@ -17,7 +17,7 @@ class Form extends React.Component<Props, any> {
 
   render() {
     return (
-      <View>
+      <View style={{ marginHorizontal: 16 }}>
         {
           this.props.children.map((child: React.ReactElement) => {
             return React.cloneElement(child);

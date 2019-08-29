@@ -1,11 +1,16 @@
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
+  formLayoutWrap: {
+    marginTop: 16,
+    paddingVertical: 16,
+  },
+  // 横向的
   inlineFromLayoutWrap: {
     display: 'flex',
     flexDirection: 'row',
-    alignItems: 'flex-start',
-    paddingVertical: 5,
+    alignItems: 'center',
+    justifyContent: 'space-between',
     borderBottomWidth: 1,
     borderStyle: 'solid',
     borderColor: '#eee',
@@ -13,24 +18,20 @@ export default StyleSheet.create({
   inlineFormLabel: {
     display: 'flex',
     justifyContent: 'center',
-    height: 38,
     marginRight: 5,
+    height: 22
   },
   inlineFormLabelTxt: {
-    fontSize: 15,
+    fontSize: 16,
   },
   inlineFormComponentWrap: {
     flex: 1,
+    alignItems: 'flex-end',
   },
-  formComponent: {
-    display: 'flex',
-    justifyContent: 'center',
-    height: 38,
-    width: '100%',
-  },
+  // 横向的
+
+  // 纵向的
   verticalFromLayoutWrap: {
-    marginTop: 18,
-    paddingHorizontal: 5,
     borderBottomWidth: 1,
     borderStyle: 'solid',
     borderColor: '#eee',
@@ -38,17 +39,19 @@ export default StyleSheet.create({
   verticalFormLabel: {
     display: 'flex',
     justifyContent: 'center',
-    height: 38,
     marginRight: 5,
+    marginBottom: 17,
+    height: 24
   },
   verticalFormLabelTxt: {
-    fontSize: 15,
+    fontSize: 18,
   },
   verticalFormComponent: {
     // paddingVertical: 5,
   },
   verticalFormComponentWrap: {
   },
+  // 纵向的
   help: {
     color: 'red',
     textAlign: 'left',

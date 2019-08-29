@@ -7,11 +7,6 @@ import { StyleSheet } from 'react-native';
  * @time: 09:56
  */
 export default StyleSheet.create({
-  switchLayout: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    flex: 1
-  },
   switchWrapper: {
     width: 56,
     height: 30,

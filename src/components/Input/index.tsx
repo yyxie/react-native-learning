@@ -39,6 +39,11 @@ interface Props {
 
   // 输入框前的icon
   frontIcon?: React.ReactNode;
+  // 输入框后的内容
+  suffix?: React.ReactNode;
+
+  // 布局排列方式
+  mode?: 'inline' | 'vertical';
 
   // 其他
   [propsName: string]: any;
@@ -69,7 +74,8 @@ export default class Input extends PureComponent<Props, State> {
     placeholder: '请输入',
     isShowClear: false,
     clearIcon: require('./icon/icon-clear.png'),
-    noBorder: true
+    noBorder: true,
+    mode: 'vertical'
   };
 
   static getDerivedStateFromProps(nextProps: Props, prevState: State) {
@@ -151,6 +157,8 @@ export default class Input extends PureComponent<Props, State> {
       clearIcon,
       frontIcon,
       noBorder,
+      mode,
+      suffix,
       ...others
     } = this.props;
     return (
@@ -162,7 +170,7 @@ export default class Input extends PureComponent<Props, State> {
         <View style={[styles.textInputWrapper, inputWrapStyle, noBorder && { borderWidth: 0 }]}>
           {frontIcon}
           <TextInput
-            style={[styles.textInputStyle, inputStyle]}
+            style={[styles.textInputStyle, mode === 'inline' && { textAlign: 'right' }, inputStyle]}
             onChangeText={this.onChange}
             value={value}
             defaultValue={defaultValue}
@@ -180,6 +188,7 @@ export default class Input extends PureComponent<Props, State> {
             >
               <Image style={styles.menuArrow} source={clearIcon} />
             </TouchableHighlight>)}
+          {suffix}
         </View>
         <FlatList
           style={styles.autoCompleteWrap}

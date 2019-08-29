@@ -6,7 +6,7 @@
 
 import React, { Component } from 'react';
 import {
-  Text, View, Image
+  Text, View, Image, TouchableHighlight
 } from 'react-native';
 
 import {
@@ -60,13 +60,17 @@ class FormInner extends Component {
     });
   }
 
+  handleGetCode=() => {
+    alert('获取code');
+  }
+
   render() {
     const { form } = this.props;
     const { modalVisible } = this.state;
     return (
       <View>
-        <Form style={{ paddingHorizontal: 5 }}>
-          <Form.Item style={styles.searchBar}>
+        <Form>
+          <Form.Item>
             {
               form.getFieldDecorator({
                 key: 'search1',
@@ -85,6 +89,13 @@ class FormInner extends Component {
                     source={require('../../assets/icons/icon-search.png')}
                   />}
                   placeholder="输入名称进行查询"
+                  suffix={
+                    <TouchableHighlight
+                      onPress={this.handleGetCode}
+                      underlayColor="transparent"
+                    >
+                      <Text style={{ color: '#88919A' }}>获取验证码</Text>
+                    </TouchableHighlight>}
                 />
               )
             }
@@ -106,10 +117,24 @@ class FormInner extends Component {
           <Form.Item label="搜索项" mode="vertical">
             <Switch value={1} />
           </Form.Item>
+          <Form.Item label="搜索项">
+            <Switch value={1} />
+          </Form.Item>
           <View style={{ paddingHorizontal: 20, paddingTop: 10 }}>
-            <Button onPress={this.onPress}>获取值</Button>
+            <Button Press={this.onPress}>获取值primary</Button>
           </View>
-
+          <View style={{ paddingHorizontal: 20, paddingTop: 10 }}>
+            <Button type="danger" Press={this.onPress}>获取值danger</Button>
+          </View>
+          <View style={{ paddingHorizontal: 20, paddingTop: 10 }}>
+            <Button ghost Press={this.onPress}>获取值primary ghost</Button>
+          </View>
+          <View style={{ paddingHorizontal: 20, paddingTop: 10 }}>
+            <Button ghost type="danger" Press={this.onPress}>获取值ghost danger</Button>
+          </View>
+          <View style={{ paddingHorizontal: 20, paddingTop: 10 }}>
+            <Button disabled Press={this.onPress}>获取值disabled</Button>
+          </View>
         </Form>
         <Modal visible={modalVisible} onClose={this.onModalClose}>
           <Text>ffff</Text>
