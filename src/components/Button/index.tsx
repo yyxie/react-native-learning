@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, TouchableHighlight, StyleSheet } from 'react-native';
+import { View, Text, TouchableHighlight, StyleSheet } from 'react-native';
 /**
  * @fileOverview 按钮
  * @author 解园园
@@ -37,11 +37,12 @@ export default class ButtonCustom extends React.Component<Props, any> {
     const styleMain = ghost ? 'ghost' : 'primary';
     return (
       <TouchableHighlight
-        underlayColor='tran'
-        style={[styles[styleMain].commonWrap, styles[styleMain][`${type}Wrap`], disabled && styles[styleMain].disabled, style]}
+        underlayColor="transparent"
         onPress={this.onPress}
       >
-        <Text style={[styles[styleMain].commonText, styles[styleMain][`${type}Text`]]}>{children}</Text>
+        <View style={[styles[styleMain].commonWrap, styles[styleMain][`${type}Wrap`], disabled && styles[styleMain].disabled, style]}>
+          <Text style={[styles[styleMain].commonText, styles[styleMain][`${type}Text`]]}>{children}</Text>
+        </View>
       </TouchableHighlight>
     );
   }
