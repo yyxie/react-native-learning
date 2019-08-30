@@ -13,11 +13,17 @@ export default StyleSheet.create({
   listItem: {
     width: '100%',
     paddingVertical: 20,
-    marginBottom: 5,
     backgroundColor: '#FFAB67',
     color: '#fff'
   },
   listText: {
+    color: '#fff'
+  },
+  rightDelBtn: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'red',
     color: '#fff'
   }
 });

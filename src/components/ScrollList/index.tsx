@@ -5,18 +5,21 @@
 
 import React from 'react';
 import {
-  FlatList, View, Dimensions
+  FlatList, View, Dimensions, PanResponder, Animated
 } from 'react-native';
 
 
 import EmptyList from './EmptyList';
 import FooterComponent from './FooterComponent';
+import ListItem from './ListItem';
 
 interface Props {
   data?: [];
   noMoreTxt?: string;
   nextPageTitle?: string;
   renderItems: (item: object) => React.ReactElement;
+  renderLeft: (item: object) => React.ReactElement | string;
+  renderRight: (item: object) => React.ReactElement | string;
   requestAction?: any;
   getRequestParam?: any;
   onRefresh?: any;
@@ -27,7 +30,10 @@ interface Props {
   isPullFresh?: boolean;
   emptyImg?: any;
   emptyTitle?: string;
+  leftWidth?: number;
+  rightWidth?: number;
 }
+const screen = Dimensions.get('window');
 
 export default class ScrollLists extends React.PureComponent<Props, any> {
   constructor(props: Props) {
@@ -45,7 +51,9 @@ export default class ScrollLists extends React.PureComponent<Props, any> {
 
   static defaultProps = {
     isPullFresh: true,
-    keyFiled: 'id'
+    keyFiled: 'id',
+    leftWidth: 0,
+    rightWidth: 0
   };
 
   async componentDidMount() {
@@ -82,14 +90,29 @@ export default class ScrollLists extends React.PureComponent<Props, any> {
     }
   }
 
+  componentWillMount(): void {
+  }
+
   /**
    * 渲染子项目
    * @param item
    */
   renderItem = (item: { item: object }) => {
-    const { renderItems } = this.props;
+    const {
+      renderItems, renderLeft, renderRight, leftWidth, rightWidth
+    } = this.props;
+    debugger;
     if (renderItems) {
-      return renderItems(item.item);
+      return (
+        <ListItem
+          item={item}
+          renderItems={renderItems}
+          renderLeft={renderLeft}
+          renderRight={renderRight}
+          leftWidth={leftWidth}
+          rightWidth={rightWidth}
+        />
+      );
     }
     return null;
   }

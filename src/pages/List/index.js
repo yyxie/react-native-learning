@@ -5,12 +5,14 @@
  */
 
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
+import { Text, TouchableHighlight, View } from 'react-native';
 
 import { ScrollList } from '../../components';
 
 import Actions from '../../actions/actions';
 import styles from './index.style';
+
+const rightWidth = 100;
 
 export default class List extends Component {
   constructor(props) {
@@ -34,6 +36,22 @@ export default class List extends Component {
       </View>);
   };
 
+  handleDel=() => {
+
+  }
+
+  renderRight = () => {
+    return (
+      <TouchableHighlight
+        underlayColor="transparent"
+        onPress={this.handleDel}
+        style={[styles.rightDelBtn, { width: rightWidth }]}
+      >
+        <Text>删除</Text>
+      </TouchableHighlight>
+    );
+  }
+
   render() {
     return (
       <View style={{ flex: 1 }}>
@@ -41,6 +59,9 @@ export default class List extends Component {
           keyFiled="id"
           style={styles.container}
           renderItems={this.renderItem}
+          rightWidth={rightWidth}
+          renderRight={this.renderRight}
+          rightAction={this.handleDel}
           requestAction={Actions.getList}
         />
       </View>
